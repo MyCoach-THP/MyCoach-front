@@ -1,13 +1,24 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoSvg from "../assets/logo.svg";
+import { useAtom } from "jotai";
+import { authAtom } from "./authAtom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const [authState, setAuthState] = useAtom(authAtom);
+  const isCoach = localStorage.getItem("is_coach");
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    setAuthState({
+      isLoggedIn: false,
+      token: null,
+      user_id: null,
+    });
     navigate("/");
   };
 
@@ -20,25 +31,41 @@ const Navbar = () => {
         </Link>
         {/* Liens à droite */}
         <ul className='flex space-x-4'>
-          {!isLoggedIn ? (
+          {isLoggedIn ? (
             <>
-              <li>
-                <Link to='/register' className='text-blue-500'>
-                  Register
+              {isCoach === "true" ? (
+                <li>
+                  <Link to='/dashboard' className='nav-link'>
+                    Tableau de bord
+                  </Link>
+                </li>
+              ) : (
+                <Link to='/trainings' className='nav-link'>
+                  Mon profil
                 </Link>
-              </li>
+              )}
+              <Link to='shoppingcart' className='nav-link'>
+                Mon Panier
+              </Link>
               <li>
-                <Link to='/signin' className='text-blue-500'>
-                  Sign In
-                </Link>
+                <button onClick={handleLogout} className='nav-link'>
+                  Se déconnecter
+                </button>
               </li>
             </>
           ) : (
-            <li>
-              <button onClick={handleLogout} className='text-blue-500'>
-                Sign Out
-              </button>
-            </li>
+            <>
+              <li>
+                <Link to='/register' className='nav-link'>
+                  S'enregistrer
+                </Link>
+              </li>
+              <li>
+                <Link to='/signin' className='nav-link'>
+                  Se connecter
+                </Link>
+              </li>
+            </>
           )}
         </ul>
       </div>

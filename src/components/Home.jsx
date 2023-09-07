@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "@/components/Card";
 
 const Home = () => {
+  const [coaches, setCoaches] = useState([]);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+  useEffect(() => {
+    fetch("http://localhost:3000/coaches")
+      .then((response) => response.json())
+      .then((data) => setCoaches(data))
+      .catch((error) =>
+        console.error("Erreur lors de la récupération des coaches : ", error)
+      );
+  }, []);
 
   return (
     <div className='h-screen flex flex-col'>
@@ -29,27 +39,23 @@ const Home = () => {
               </Link>
             </>
           ) : (
-            <h1 className='text-4xl font-bold'>Welcome</h1>
+            <h1 className='text-4xl font-bold'>Bienvenue</h1>
           )}
         </div>
       </div>
       <div className='card-section-background'>
+        <h1 className='text-2xl mb-4 text-center text-white font-bold mt-4'>
+          Nos Coachs
+        </h1>
         <div className='flex justify-around p-4'>
-          <Card
-            title='Card 1'
-            description='This is card 1'
-            imageUrl='https://via.placeholder.com/150'
-          />
-          <Card
-            title='Card 2'
-            description='This is card 2'
-            imageUrl='https://via.placeholder.com/150'
-          />
-          <Card
-            title='Card 3'
-            description='This is card 3'
-            imageUrl='https://via.placeholder.com/150'
-          />
+          {coaches.map((coach) => (
+            <Card
+              key={coach.id}
+              title={coach.email}
+              description='description'
+              imageUrl='https://via.placeholder.com/150'
+            />
+          ))}
         </div>
       </div>
     </div>
