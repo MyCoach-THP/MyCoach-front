@@ -14,23 +14,39 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type='submit'>Sign In</button>
-      </form>
+    <div className='background-style'>
+      <div className='flex justify-center items-center min-h-screen'>
+        <div className='bg-white p-8 rounded shadow-md mt-[-200px]'>
+          <h1 className='text-2xl mb-4'>Page de connexion</h1>
+          <form onSubmit={handleSubmit}>
+            <div className='mb-4'>
+              <input
+                type='email'
+                placeholder='Email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className='border p-2 rounded w-full'
+              />
+            </div>
+            <div className='mb-4'>
+              <input
+                type='password'
+                placeholder='Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className='border p-2 rounded w-full'
+              />
+            </div>
+            <div>
+              <button
+                type='submit'
+                className='text-white bg-blue-custom hover:bg-blue-custom-hover py-2 px-4 rounded w-full'>
+                Se Connecter
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
