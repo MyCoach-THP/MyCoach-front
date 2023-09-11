@@ -35,6 +35,9 @@ const Navbar = () => {
         <ul className='flex space-x-4'>
           {isLoggedIn ? (
             <>
+                <Link to='/profile' className='nav-link'>
+                  Mon profil
+                </Link>
               {isCoach === "true" ? (
                 <li>
                   <Link to='/dashboard' className='nav-link'>
@@ -42,13 +45,12 @@ const Navbar = () => {
                   </Link>
                 </li>
               ) : (
-                <Link to='/trainings' className='nav-link'>
-                  Mon profil
-                </Link>
-              )}
-              <Link to='shoppingcart' className='nav-link'>
+              <>
+                <Link to='shoppingcart' className='nav-link'>
                 Mon Panier
-              </Link>
+                </Link>
+              </>
+              )}
               <li>
                 <button onClick={handleLogout} className='nav-link'>
                   Se déconnecter
