@@ -48,7 +48,7 @@ $custom-blue-hover: #19b9e0;
     url("https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80");
   background-size: cover;
   background-position: center;
-  height: 50vh;
+  height: 100%;
 }
 
 .my-coach-div {
@@ -72,6 +72,11 @@ $custom-blue-hover: #19b9e0;
 
 .nav-link:hover {
   color: $custom-blue;
+}
+
+.alice-carousel__next-btn:hover,
+.alice-carousel__prev-btn:hover {
+  cursor: pointer;
 }
 
 .policy {
@@ -107,6 +112,16 @@ $custom-blue-hover: #19b9e0;
 .policy p {
   font-size: 16px;
   margin-bottom: 15px;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .error {
