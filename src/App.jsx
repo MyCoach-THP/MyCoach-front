@@ -13,11 +13,11 @@ import Trainings from "./components/Trainings";
 import ShoppingCart from "./components/ShoppingCart";
 
 function App() {
+
   return (
     <div className='main-content flex flex-col min-h-screen'>
       <Router>
         <Navbar />
-        <div className='flex-grow'>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/register' element={<Register />} />
@@ -33,7 +33,6 @@ function App() {
             <Route path='/trainings' element={<Trainings />} />
             <Route path='/shoppingcart' element={<ShoppingCart />} />
           </Routes>
-        </div>
         <Footer />
       </Router>
     </div>
