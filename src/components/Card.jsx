@@ -6,7 +6,7 @@ const Card = ({ title, description, imageUrl }) => {
       <div className='overflow-hidden' style={{ width: "100%", height: "70%" }}>
         <img className='w-full h-full object-cover' src={imageUrl} alt={title} />
       </div>
-      <h2 className='text-2xl font-semibold mt-2'>
+      <h2 className='text-2xl font-semibold'>
         {title}
       </h2>
       <p className='text-gray-700'>

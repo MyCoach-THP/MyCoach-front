@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "@/components/Card";
 import { API_BASE_URL } from "../../config";
-
+import CoachesCarousel from "./CoachesCarousel";
 
 const Home = () => {
   const [coaches, setCoaches] = useState([]);
@@ -49,20 +49,7 @@ const Home = () => {
         <h1 className='text-2xl mb-4 text-center text-white font-bold mt-4'>
           Nos Coachs
         </h1>
-        <div className='flex justify-around p-4'>
-          {coaches.map((coach) => (
-            <Card
-              key={coach.id}
-              title={coach.firstname}
-              description={coach.description}
-              imageUrl={
-                coach.image_url
-                  ? `${coach.image_url}`
-                  : 'https://via.placeholder.com/250'
-              }
-            />
-          ))}
-        </div>
+        <CoachesCarousel />
       </div>
     </div>
   );
