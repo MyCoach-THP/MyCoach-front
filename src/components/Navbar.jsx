@@ -35,7 +35,7 @@ const Navbar = () => {
         <ul className='flex space-x-4'>
           {isLoggedIn ? (
             <>
-                <Link to='/trainings' className='nav-link'>
+                <Link to='/profile' className='nav-link'>
                   Mon profil
                 </Link>
               {isCoach === "true" ? (

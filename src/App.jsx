@@ -9,7 +9,7 @@ import TrainingPlanView from "@/components/TrainingPlanView";
 import Confidentiality from "./pages/Confidentiality";
 import Legal from "./pages/Legal";
 import Contact from "./pages/Contact";
-import Trainings from "./components/Trainings";
+import Profile from "./components/Profile";
 import ShoppingCart from "./components/ShoppingCart";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
               path='/training_plan/:id'
               element={<TrainingPlanView />}
             />
-            <Route path='/trainings' element={<Trainings />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='/shoppingcart' element={<ShoppingCart />} />
           </Routes>
         <Footer />
