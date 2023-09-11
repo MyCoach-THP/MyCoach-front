@@ -11,6 +11,8 @@ const Register = () => {
   const navigate = useNavigate();
   const [authState, setAuthState] = useAtom(authAtom);
   const [isCoach, setIsCoach] = useState(false);
+  const [description, setDescription] = useState('');
+  const [firstname, setFirstname] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   let authToken;
 
@@ -20,6 +22,8 @@ const Register = () => {
     formData.append('user[email]', email);
     formData.append('user[password]', password);
     formData.append('user[is_coach]', isCoach);
+    formData.append('user[description]', description);
+    formData.append('user[firstname]', firstname);
     if (selectedImage) {
       formData.append('user[image]', selectedImage);
     }
@@ -80,6 +84,23 @@ const Register = () => {
                 placeholder='Mot de passe'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className='border p-2 rounded w-full'
+              />
+            </div>
+            <div className='mb-4'>
+              <input
+                type='text'
+                placeholder='Prénom'
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+                className='border p-2 rounded w-full'
+              />
+            </div>
+            <div className='mb-4'>
+              <textarea
+                placeholder='Description pour les clients'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className='border p-2 rounded w-full'
               />
             </div>
