@@ -11,24 +11,25 @@ const Register = () => {
   const navigate = useNavigate();
   const [authState, setAuthState] = useAtom(authAtom);
   const [isCoach, setIsCoach] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   let authToken;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append('user[email]', email);
+    formData.append('user[password]', password);
+    formData.append('user[is_coach]', isCoach);
+    if (selectedImage) {
+      formData.append('user[image]', selectedImage);
+    }
+
     fetch(`${API_BASE_URL}/users`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: {
-          email: email,
-          password: password,
-          is_coach: isCoach,
-        },
-      }),
+      body: formData,
     })
       .then((response) => {
+        console.log(response)
         if (response.ok) {
           const authHeader = response.headers.get("Authorization");
           authToken = authHeader.split(" ")[1];
@@ -79,6 +80,17 @@ const Register = () => {
                 placeholder='Mot de passe'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className='border p-2 rounded w-full'
+              />
+            </div>
+            <div className='mb-4'>
+              <input
+                type='file'
+                accept='image/*'
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  setSelectedImage(file);
+                }}
                 className='border p-2 rounded w-full'
               />
             </div>
