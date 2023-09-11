@@ -55,7 +55,11 @@ const Home = () => {
               key={coach.id}
               title={coach.email}
               description='description'
-              imageUrl={coach.image_url ? coach.image_url : 'https://via.placeholder.com/150'}
+              imageUrl={
+                coach.image_url
+                  ? `${coach.image_url}`
+                  : 'https://via.placeholder.com/250'
+              }
             />
           ))}
         </div>
