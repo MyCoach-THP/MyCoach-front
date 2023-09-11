@@ -1,6 +1,6 @@
 import React from "react";
 
-const Trainings = () => {
+const Profile = () => {
   return (
     <div className='background-style2'>
       <div className='flex justify-center items-center min-h-screen opacity-90'>
@@ -21,4 +21,4 @@ const Trainings = () => {
   );
 };
 
-export default Trainings;
+export default Profile;
