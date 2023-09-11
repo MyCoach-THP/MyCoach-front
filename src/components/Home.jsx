@@ -53,8 +53,8 @@ const Home = () => {
           {coaches.map((coach) => (
             <Card
               key={coach.id}
-              title={coach.email}
-              description='description'
+              title={coach.firstname}
+              description={coach.description}
               imageUrl={
                 coach.image_url
                   ? `${coach.image_url}`
