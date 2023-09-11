@@ -29,7 +29,8 @@ $custom-blue-hover: #19b9e0;
     url("https://images.unsplash.com/photo-1593079831268-3381b0db4a77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80");
   background-size: cover;
   background-position: center;
-  min-height: 80vh;
+  min-height: 100vh;
+  background-attachment: fixed;
 }
 
 .background-style2 {
@@ -38,8 +39,7 @@ $custom-blue-hover: #19b9e0;
       rgba(0, 204, 255, 0.5)
     ),
     url("https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
-  background-size: cover;
-  background-position: top;
+  position: fixed;
   height: 100vh;
 }
 
@@ -109,4 +109,39 @@ $custom-blue-hover: #19b9e0;
 .policy p {
   font-size: 16px;
   margin-bottom: 15px;
+}
+
+.error {
+  background-color: rgb(255, 52, 52);
+  border-radius: 5px;
+  padding: 3px;
+  user-select: none;
+  font-size: 18px;
+}
+
+.coachform{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  padding: 15px;
+  background-color: white;
+  opacity: 0.9;
+  border-radius: 5px;
+}
+
+.formwidget{
+  width: 500px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 5px;
+  outline: none;
+}
+
+.formwidget:focus{
+  background-color: rgb(255, 255, 228);
 }

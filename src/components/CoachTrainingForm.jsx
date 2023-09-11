@@ -17,8 +17,8 @@ const CoachTrainingForm = ({ onNewPlan }) => {
     setToken(storedToken);
   }, []);
 
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,35 +27,56 @@ const CoachTrainingForm = ({ onNewPlan }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSuccessMessage(null);
-    setErrorMessage(null);
 
-    fetch(`${API_BASE_URL}/training_plans`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ training_plan: formData }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.id) {
-          setSuccessMessage("Le plan a été créé avec succès.");
-          onNewPlan(data);
-        } else {
-          setErrorMessage(
-            "Une erreur est survenue lors de la création du plan."
-          );
-        }
+    if (formData.name.length < 5){
+      setErrorMessage("Le nom de votre programme doit avoir au moins 5 caractères.");
+    } else if (formData.description.length < 10){
+      setErrorMessage("La description de votre programme doit avoir au moins 10 caractères.");
+    } else if (formData.price === 0){
+      setErrorMessage("Vous devez spécifier un prix minimum.");
+    } else {
+      setSuccessMessage("");
+      setErrorMessage("");
+
+      fetch(`${API_BASE_URL}/training_plans`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ training_plan: formData }),
       })
-      .catch((error) => {
-        setErrorMessage(`Erreur de réseau : ${error}`);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.id) {
+            setSuccessMessage("Le plan a été créé avec succès.");
+            onNewPlan(data);
+          } else {
+            setErrorMessage(
+              "Une erreur est survenue lors de la création du plan."
+            );
+          }
+        })
+        .catch((error) => {
+          setErrorMessage(`Erreur de réseau : ${error}`);
+        });
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4'>
+
+      {errorMessage.length>0 && (
+        <div role="Erreur">
+        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+          Danger
+        </div>
+        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+          <p>{errorMessage}</p>
+        </div>
+      </div>
+      )}
+
       <div className='flex flex-col'>
         <label htmlFor='name' className='text-lg mb-2'>
           Nom du Plan
@@ -65,7 +86,7 @@ const CoachTrainingForm = ({ onNewPlan }) => {
           name='name'
           value={formData.name}
           onChange={handleChange}
-          className='p-2 border rounded'
+          className='formwidget'
           placeholder='Insérez le nom ici'
         />
       </div>
@@ -79,9 +100,9 @@ const CoachTrainingForm = ({ onNewPlan }) => {
           name='description'
           value={formData.description}
           onChange={handleChange}
-          className='p-2 border rounded'
+          className='formwidget'
           placeholder='Insérez la description ici'
-          rows='4'></textarea>
+          rows='4' style={{resize:"none"}}></textarea>
       </div>
 
       <div className='flex flex-col'>
@@ -94,7 +115,7 @@ const CoachTrainingForm = ({ onNewPlan }) => {
           value={formData.price}
           onChange={handleChange}
           type='number'
-          className='p-2 border rounded'
+          className='formwidget'
           placeholder='Insérez le prix ici'
         />
       </div>
