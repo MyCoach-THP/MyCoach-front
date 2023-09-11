@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "@/components/Card";
+import { API_BASE_URL } from "../../config";
+
 
 const Home = () => {
   const [coaches, setCoaches] = useState([]);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   useEffect(() => {
-    fetch("http://localhost:3000/coaches")
+    fetch(`${API_BASE_URL}/coaches`)
       .then((response) => response.json())
       .then((data) => setCoaches(data))
       .catch((error) =>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import CoachTrainingForm from "./CoachTrainingForm";
 import TrainingPlanView from "./TrainingPlanView";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
+
 
 const Dashboard = () => {
   const [isCoach, setIsCoach] = useState(false);
@@ -17,7 +19,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (isCoach) {
       const token = localStorage.getItem("token");
-      fetch("http://localhost:3000/training_plans", {
+      fetch(`${API_BASE_URL}/training_plans`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +55,7 @@ const Dashboard = () => {
 
   const deleteTrainingPlan = (id) => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/training_plans/${id}`, {
+    fetch(`${API_BASE_URL}/training_plans/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

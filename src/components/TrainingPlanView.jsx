@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 
 const TrainingPlanView = ({ id }) => {
   const { id: trainingPlanId } = useParams();
@@ -10,7 +11,7 @@ const TrainingPlanView = ({ id }) => {
     const token = localStorage.getItem("token");
 
     // Effectue la requête pour obtenir les détails du plan
-    fetch(`http://localhost:3000/training_plans/${id}`, {
+    fetch(`${API_BASE_URL}/training_plans/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import logoSvg from "../assets/logo.svg";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
+import { API_BASE_URL } from "../../config";
+
 
 const Navbar = () => {
   const navigate = useNavigate();

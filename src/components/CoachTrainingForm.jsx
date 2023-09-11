@@ -1,6 +1,8 @@
 // CoachTrainingForm.jsx
 
 import React, { useState, useEffect } from "react";
+import { API_BASE_URL } from "../../config";
+
 
 const CoachTrainingForm = ({ onNewPlan }) => {
   const [token, setToken] = useState(null);
@@ -28,7 +30,7 @@ const CoachTrainingForm = ({ onNewPlan }) => {
     setSuccessMessage(null);
     setErrorMessage(null);
 
-    fetch("http://localhost:3000/training_plans", {
+    fetch(`${API_BASE_URL}/training_plans`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
