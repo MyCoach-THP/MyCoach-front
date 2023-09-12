@@ -82,6 +82,28 @@ const Profile = () => {
     setSelectedPlan(plan);
     setShowPlan(true);
   }
+  
+  const handleClosePlan = () =>{
+    setShowPlan(false);
+  }
+
+  const handleAddToCartClick = () =>{
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_BASE_URL}/cart/add/?product_id=${selectedPlan.id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }).then((response) => {
+        if (response.ok) {
+          const data = response.json();
+          console.log(data);
+        } else {
+          throw new Error("Erreur lors de l'ajout au panier");
+        }
+      })
+  };
 
   return (
     <div className='background-style2'>
@@ -137,7 +159,16 @@ const Profile = () => {
                   </>
               )}
               {showPlan && (
-                <p>{selectedPlan.description}</p>
+                <div className="popup-plan">
+                  <span className="popup-plan-close" onClick={handleClosePlan}>X</span>
+                <p className="mt-5 mb-2"><strong>Proposé par : </strong>{profileData.firstname}</p>
+                <p className="mb-2"><strong>Nom du programme : </strong>{selectedPlan.name}</p>
+                <p className="mb-2"><strong>Description : </strong>{selectedPlan.description}</p>
+                <p className="mb-2"><strong>Prix : </strong>{selectedPlan.price} €</p>
+                <button className="button-add-cart" onClick={handleAddToCartClick}>
+                Ajouter au panier
+                 </button>
+                </div>
               )}
             </>
         )}
