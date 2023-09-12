@@ -16,6 +16,7 @@ const Profile = () => {
   const { id } = useParams();
   const [displayedUserId, setDisplayedUserId] = useState(null);
   const [isCoach, setIsCoach] = useState(false);
+  const [showPlan, setShowPlan] = useState(null);
 
   useEffect(() => {
     const userId = id || user_id;
@@ -114,21 +115,20 @@ const Profile = () => {
               <strong>Description :</strong> {profileData.description}
             </div>
               {isCoach && trainingPlans.length > 0 && (
-                <>
-                
-                  <h2 className='text-xl mb-4 text-center'>
-                    Le(s) programme(s) d'entraînement(s) que je propose
-                  </h2>
-                  <ul className='list-decimal list-inside'>
-                    {trainingPlans.map((plan) => (
-                      <li key={plan.id} className='m-2'>
-                        {plan.name}
-                      </li>
-                    ))}
-                  </ul>
-                  </>
-              )}
+              <>
+              <h2 className='text-xl mb-4 text-center'>
+                Le(s) programme(s) d'entraînement(s) que je propose
+              </h2>
+              <ul className='list-decimal list-inside'>
+                {trainingPlans.map((plan) => (
+                  <li key={plan.id} className='m-2'>
+                    {plan.name}
+                  </li>
+                ))}
+              </ul>
             </>
+            )}
+          </>
         )}
       </div>
     </div>
