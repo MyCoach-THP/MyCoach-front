@@ -90,28 +90,9 @@ const Register = () => {
             <div className='mb-4'>
               <input
                 type='text'
-                placeholder='Prénom'
+                placeholder='Prénom (facultatif)'
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
-                className='border p-2 rounded w-full'
-              />
-            </div>
-            <div className='mb-4'>
-              <textarea
-                placeholder='Description pour les clients'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className='border p-2 rounded w-full'
-              />
-            </div>
-            <div className='mb-4'>
-              <input
-                type='file'
-                accept='image/*'
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  setSelectedImage(file);
-                }}
                 className='border p-2 rounded w-full'
               />
             </div>
@@ -121,18 +102,34 @@ const Register = () => {
                   type='checkbox'
                   checked={isCoach}
                   onChange={(e) => {
-                    console.log(e);
-                    if (e.target.checked) {
-                      console.log("JE SUIS COCHE");
-                    } else {
-                      console.log("JE SUIS PAS COCHE");
-                    }
                     setIsCoach(e.target.checked);
                   }}
                   className='mr-2'
                 />
                 Je m'inscris en tant que Coach
               </label>
+            </div>
+            {isCoach && (
+              <div className='mb-4'>
+                <textarea
+                  placeholder='Description pour les clients'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className='border p-2 rounded w-full'
+                />
+              </div>
+            )}
+            <div className='mb-4'>
+              <label>Photo :</label>
+              <input
+                type='file'
+                accept='image/*'
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  setSelectedImage(file);
+                }}
+                className='border p-2 rounded w-full'
+              />
             </div>
             <button
               type='submit'
