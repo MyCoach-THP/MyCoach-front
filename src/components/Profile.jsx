@@ -14,9 +14,12 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [flashMessage, setFlashMessage] = useState(null);
   const { id } = useParams();
+  const [displayedUserId, setDisplayedUserId] = useState(null);
+
 
   useEffect(() => {
     const userId = id || user_id;
+     setDisplayedUserId(userId); 
     console.log(userId);
     fetch(`${API_BASE_URL}/coaches/${userId}`)
       .then((response) => response.json())
@@ -69,13 +72,14 @@ const Profile = () => {
         <h1 className='text-2xl mb-4 text-center'>Mon Profil</h1>
         {flashMessage && <div className='flash-message'>{flashMessage}</div>}
 
-        {user_id === user_id && (
+        {user_id === displayedUserId && (
           <button
             onClick={() => setIsEditing(!isEditing)}
             className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4'>
             {isEditing ? "Annuler" : "Mettre à jour le profil"}
           </button>
         )}
+
         {isEditing ? (
           <ProfileUpdateForm
             onUpdate={handleUpdate}
