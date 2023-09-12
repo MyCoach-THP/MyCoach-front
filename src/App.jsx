@@ -9,7 +9,6 @@ import Dashboard from "@/components/Dashboard";
 import TrainingPlanView from "@/components/TrainingPlanView";
 import Confidentiality from "./pages/Confidentiality";
 import Legal from "./pages/Legal";
-import Contact from "./pages/Contact";
 import Profile from "./components/Profile";
 import ShoppingCart from "./components/ShoppingCart";
 import ForgotPassword from "./components/ForgotPassword";
@@ -42,7 +41,6 @@ function App() {
           <Route path='/signin' element={<SignIn />} />
           <Route path='/confidentiality' element={<Confidentiality />} />
           <Route path='/legal' element={<Legal />} />
-          <Route path='/contact' element={<Contact />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/training_plan/:id' element={<TrainingPlanView />} />
           <Route path='/profile' element={<Profile />} />
