@@ -81,7 +81,6 @@ const CoachesCarousel = () => {
         items={items}
         responsive={responsive}
         ref={carouselRef}
-        autoHeight={true}
         renderPrevButton={renderPrevButton}
         renderNextButton={renderNextButton} />
     </div>
