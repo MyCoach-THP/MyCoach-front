@@ -21,25 +21,37 @@ const CoachesCarousel = () => {
   }, []);
 
   const responsive = {
-    0: { items: 2 },
-    568: { items: 3 },
-    1024: { items: 4 },
+    0: {
+      items: 1,
+    },
+    635: {
+      items: 2,
+      // itemsFit: 'contain',
+    },
+    970: {
+      items: 3,
+      // itemsFit: 'contain',
+    },
+    1230: {
+      items: 4,
+      // itemsFit: 'contain',
+    }
   };
 
-const items = coaches.map((coach) => (
-  <Card
-    onDragStart={handleDragStart}
-    role='presentation'
-    key={coach.id}
-    title={coach.firstname}
-    description={coach.description}
-    imageUrl={
-      coach.image_url ? `${coach.image_url}` : "https://via.placeholder.com/250"
-    }
-    coachId={coach.id}
-    userType='coach'
-  />
-));
+  const items = coaches.map((coach) => (
+    <Card
+      onDragStart={handleDragStart}
+      role='presentation'
+      key={coach.id}
+      title={coach.firstname}
+      description={coach.description}
+      imageUrl={
+        coach.image_url ? `${coach.image_url}` : "https://via.placeholder.com/250"
+      }
+      coachId={coach.id}
+      userType='coach'
+    />
+  ));
 
 
   const renderPrevButton = ({ isDisabled }) => (
@@ -69,6 +81,7 @@ const items = coaches.map((coach) => (
         items={items}
         responsive={responsive}
         ref={carouselRef}
+        autoHeight={true}
         renderPrevButton={renderPrevButton}
         renderNextButton={renderNextButton} />
     </div>
