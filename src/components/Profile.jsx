@@ -15,14 +15,20 @@ const Profile = () => {
   const [flashMessage, setFlashMessage] = useState(null);
   const { id } = useParams();
   const [displayedUserId, setDisplayedUserId] = useState(null);
-
+  const [isCoach, setIsCoach] = useState(false);
 
   useEffect(() => {
     const userId = id || user_id;
+    console.log(userId);
      setDisplayedUserId(userId); 
     fetch(`${API_BASE_URL}/coaches/${userId}`)
       .then((response) => response.json())
       .then((data) => {
+        if (!data.is_coach){
+          setIsCoach(false);
+        } else {
+          setIsCoach(true);
+        }
         setProfileData(data);
       })
       .catch((error) => {
@@ -32,8 +38,8 @@ const Profile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
-    fetch(`${API_BASE_URL}/training_plans?user_id=${user_id}`, {
+    console.log(id);
+    fetch(`${API_BASE_URL}/training_plans/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -42,15 +48,16 @@ const Profile = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         setTrainingPlans(data);
       })
       .catch((error) => {
         console.error("There was an error fetching training plans!", error);
       });
-  }, [user_id]);
+  }, [id]);
 
   if (!profileData) {
-    return <div>Loading...</div>;
+    return <div>Chargement...</div>;
   }
 
   const handleUpdate = (updatedData) => {
@@ -106,21 +113,22 @@ const Profile = () => {
             <div className='mb-4'>
               <strong>Description :</strong> {profileData.description}
             </div>
-            {profileData.isCoach ? ( 
-              <>
-            <h2 className='text-xl mb-4 text-center'>
-              Les programmes d'entraînement que je propose
-            </h2>
-            <ul className='list-decimal list-inside'>
-              {trainingPlans.map((plan) => (
-                <li key={plan.id} className='m-2'>
-                  {plan.name}
-                </li>
-              ))}
-            </ul>
+              {isCoach && trainingPlans.length > 0 && (
+                <>
+                
+                  <h2 className='text-xl mb-4 text-center'>
+                    Le(s) programme(s) d'entraînement(s) que je propose
+                  </h2>
+                  <ul className='list-decimal list-inside'>
+                    {trainingPlans.map((plan) => (
+                      <li key={plan.id} className='m-2'>
+                        {plan.name}
+                      </li>
+                    ))}
+                  </ul>
+                  </>
+              )}
             </>
-            ) : null}
-          </>
         )}
       </div>
     </div>
