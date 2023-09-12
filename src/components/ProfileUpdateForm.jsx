@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { API_BASE_URL } from "../../config";
 
-const ProfileUpdateForm = ({ onUpdate, existingData, userId }) => {
+const ProfileUpdateForm = ({ onUpdate, existingData, userId, onCloseForm }) => {
   const [firstname, setFirstname] = useState(existingData.firstname || "");
   const [description, setDescription] = useState(
     existingData.description || ""
@@ -36,7 +36,7 @@ const ProfileUpdateForm = ({ onUpdate, existingData, userId }) => {
 
     const token = localStorage.getItem("token");
 
-    fetch(`${API_BASE_URL}/users/${userId}`, {
+    fetch(`${API_BASE_URL}/profiles/${userId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -54,6 +54,7 @@ const ProfileUpdateForm = ({ onUpdate, existingData, userId }) => {
       .then((data) => {
         if (data.user) {
           onUpdate({ firstname, description, selectedImage });
+          onCloseForm(); 
         } else {
           setError("Échec de la mise à jour");
         }
