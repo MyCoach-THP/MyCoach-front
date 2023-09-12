@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [isCoach, setIsCoach] = useState(false);
   const [trainingPlans, setTrainingPlans] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [showPlan, setShowPlan] = useState(null);
+  const [currentPlan, setCurrentPlan] = useState(null);
 
   useEffect(() => {
     const storedIsCoach = localStorage.getItem("is_coach");
@@ -45,11 +45,11 @@ const Dashboard = () => {
   };
 
   const openPlan = (plan) => {
-    setShowPlan(plan);
+    setCurrentPlan(plan);
   };
 
   const closePlan = () => {
-    setShowPlan(null);
+    setCurrentPlan(null);
   };
 
   const deleteTrainingPlan = (id) => {
@@ -82,9 +82,9 @@ const Dashboard = () => {
   return (
     <div className='background-style'>
       <div className='coachform'>
-        {showPlan ? (
+        {currentPlan ? (
           <>
-            <TrainingPlanView id={showPlan.id} />
+            <TrainingPlanView current={currentPlan} />
             <button onClick={closePlan}>Retour au tableau de bord</button>
           </>
         ) : (
@@ -105,7 +105,6 @@ const Dashboard = () => {
             {showForm && <CoachTrainingForm onNewPlan={onNewPlan} />}
             <ul className='list-decimal list-inside'>
               {trainingPlans.map((plan) => { 
-                console.log(trainingPlans.length);
                 return (
                 <li
                   key={plan.id}
