@@ -216,3 +216,54 @@ $custom-blue-hover: #19b9e0;
 .description-call-to-action {
   margin: 1em 2% 2em 2%;
 }
+
+.popup-plan{
+  position: fixed;
+  margin: 0 auto;
+  z-index: 999;
+  width: 500px;
+  height: 500px;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid rgb(197, 197, 197);
+  border-radius: 5px;
+  animation: opening 0.8s forwards;
+  text-align: center;
+  padding: 10px;
+}
+
+.popup-plan-close{
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  float: right;
+  cursor: pointer;
+  border: 1px solid grey;
+  background-color: rgb(250, 102, 76);
+  color: white;
+  border-radius: 50%;
+  margin-right: 5px;
+  margin-top: 5px;
+  text-align: center;
+  line-height: 20px;
+}
+
+.popup-plan-close:hover{
+  background-color: rgb(255, 38, 0);
+}
+
+@keyframes opening {
+  0%{transform: scale(0); border-radius: 100%;}
+  100%{transform: scale(1); border-radius: 5px;}
+}
+
+.button-add-cart{
+  background-color: orange;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.button-add-cart:hover{
+  background-color: rgb(253, 180, 43);
+
+}

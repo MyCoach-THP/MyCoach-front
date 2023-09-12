@@ -4,6 +4,7 @@ import { authAtom } from "./authAtom";
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import { API_BASE_URL } from "../../config";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Profile = () => {
@@ -16,6 +17,8 @@ const Profile = () => {
   const { id } = useParams();
   const [displayedUserId, setDisplayedUserId] = useState(null);
   const [isCoach, setIsCoach] = useState(false);
+  const [showPlan, setShowPlan] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(false);
 
   useEffect(() => {
     const userId = id || user_id;
@@ -70,8 +73,36 @@ const Profile = () => {
     }, 4000);
   };
 
-  const handleCloseForm = () => {
+  const handleCloseForm = (plan) => {
+    setSelectedPlan(plan);
     setIsEditing(false);
+  };
+
+  const handleClickPlan = (plan) =>{
+    setSelectedPlan(plan);
+    setShowPlan(true);
+  }
+  
+  const handleClosePlan = () =>{
+    setShowPlan(false);
+  }
+
+  const handleAddToCartClick = () =>{
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_BASE_URL}/cart/add/?product_id=${selectedPlan.id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }).then((response) => {
+        if (response.ok) {
+          const data = response.json();
+          console.log(data);
+        } else {
+          throw new Error("Erreur lors de l'ajout au panier");
+        }
+      })
   };
 
   return (
@@ -115,18 +146,29 @@ const Profile = () => {
             </div>
               {isCoach && trainingPlans.length > 0 && (
                 <>
-                
                   <h2 className='text-xl mb-4 text-center'>
                     Le(s) programme(s) d'entraînement(s) que je propose
                   </h2>
                   <ul className='list-decimal list-inside'>
                     {trainingPlans.map((plan) => (
-                      <li key={plan.id} className='m-2'>
-                        {plan.name}
-                      </li>
+                      <p>
+                        <button key = {plan.id} onClick={()=>handleClickPlan(plan)}>{plan.name}</button>
+                      </p>
                     ))}
                   </ul>
                   </>
+              )}
+              {showPlan && (
+                <div className="popup-plan">
+                  <span className="popup-plan-close" onClick={handleClosePlan}>X</span>
+                <p className="mt-5 mb-2"><strong>Proposé par : </strong>{profileData.firstname}</p>
+                <p className="mb-2"><strong>Nom du programme : </strong>{selectedPlan.name}</p>
+                <p className="mb-2"><strong>Description : </strong>{selectedPlan.description}</p>
+                <p className="mb-2"><strong>Prix : </strong>{selectedPlan.price} €</p>
+                <button className="button-add-cart" onClick={handleAddToCartClick}>
+                Ajouter au panier
+                 </button>
+                </div>
               )}
             </>
         )}
