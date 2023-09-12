@@ -42,7 +42,7 @@ function App() {
           <Route path='/contact' element={<Contact />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/training_plan/:id' element={<TrainingPlanView />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:id' element={<Profile />} />
           <Route path='/shoppingcart' element={<ShoppingCart />} />
         </Routes>
         <Footer />

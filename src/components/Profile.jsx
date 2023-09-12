@@ -10,6 +10,7 @@ const Profile = () => {
   const [authState] = useAtom(authAtom);
   const user_id = authState.user_id;
   const [isEditing, setIsEditing] = useState(false);
+  const [flashMessage, setFlashMessage] = useState(null);
 
   useEffect(() => {
     const userId = user_id;
@@ -49,14 +50,26 @@ const Profile = () => {
 
   const handleUpdate = (updatedData) => {
     setProfileData({ ...profileData, ...updatedData });
+    setFlashMessage("Profil mis à jour");
+    setTimeout(() => {
+      setFlashMessage(null);
+    }, 3000);
+  };
+
+  const handleCloseForm = () => {
+    setIsEditing(false);
   };
 
   return (
     <div className='background-style2'>
       <div className='coachform'>
         <h1 className='text-2xl mb-4 text-center'>Mon Profil</h1>
+        {flashMessage && <div className='flash-message'>{flashMessage}</div>}
+
         {user_id === user_id && (
-          <button onClick={() => setIsEditing(!isEditing)}>
+          <button
+            onClick={() => setIsEditing(!isEditing)}
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mb-4'>
             {isEditing ? "Annuler" : "Mettre à jour le profil"}
           </button>
         )}
@@ -65,6 +78,7 @@ const Profile = () => {
             onUpdate={handleUpdate}
             existingData={profileData}
             userId={user_id}
+            onCloseForm={handleCloseForm}
           />
         ) : (
           <>

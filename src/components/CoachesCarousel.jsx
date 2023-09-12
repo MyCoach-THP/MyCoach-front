@@ -26,19 +26,20 @@ const CoachesCarousel = () => {
     1024: { items: 4 },
   };
 
-  const items = coaches.map((coach) => (
-    <Card
-      onDragStart={handleDragStart} role="presentation"
-      key={coach.id}
-      title={coach.firstname}
-      description={coach.description}
-      imageUrl={
-        coach.image_url
-          ? `${coach.image_url}`
-          : 'https://via.placeholder.com/250'
-      }
-    />
-  ));
+const items = coaches.map((coach) => (
+  <Card
+    onDragStart={handleDragStart}
+    role='presentation'
+    key={coach.id}
+    title={coach.firstname}
+    description={coach.description}
+    imageUrl={
+      coach.image_url ? `${coach.image_url}` : "https://via.placeholder.com/250"
+    }
+    coachId={coach.id}
+  />
+));
+
 
   const renderPrevButton = ({ isDisabled }) => (
     <button
