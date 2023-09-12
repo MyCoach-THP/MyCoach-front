@@ -12,6 +12,8 @@ import Legal from "./pages/Legal";
 import Contact from "./pages/Contact";
 import Profile from "./components/Profile";
 import ShoppingCart from "./components/ShoppingCart";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import { useAtom } from "jotai";
 import { authAtom } from "./components/authAtom";
 
@@ -49,6 +51,8 @@ function App() {
             element={<Profile userType='coach' />}
           />
           <Route path='/shoppingcart' element={<ShoppingCart />} />
+          <Route path='/ForgotPassword' element={<ForgotPassword />} />
+          <Route path='/ResetPassword/:token' element={<ResetPassword />} />
         </Routes>
         <Footer />
       </Router>
