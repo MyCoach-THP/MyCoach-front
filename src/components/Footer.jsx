@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ContactForm from "./ContactForm";
 
 const Footer = () => {
   return (
@@ -17,9 +18,9 @@ const Footer = () => {
           <Link to='confidentiality' className='hover:underline'>
             Politique de confidentialité
           </Link>
-          <Link to='contact' className='hover:underline'>
-            Contact
-          </Link>
+          <div className='contactform'>
+            <ContactForm />
+          </div>
         </div>
       </div>
     </div>

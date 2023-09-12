@@ -14,6 +14,7 @@ import Profile from "./components/Profile";
 import ShoppingCart from "./components/ShoppingCart";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import ContactForm from "./components/ContactForm";
 import { useAtom } from "jotai";
 import { authAtom } from "./components/authAtom";
 
@@ -45,6 +46,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/training_plan/:id' element={<TrainingPlanView />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/ContactForm' element={<ContactForm />} />
           <Route path='/profile/:id' element={<Profile />} />
           <Route
             path='/coachProfile/:id'
