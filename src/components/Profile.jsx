@@ -20,7 +20,6 @@ const Profile = () => {
   useEffect(() => {
     const userId = id || user_id;
      setDisplayedUserId(userId); 
-    console.log(userId);
     fetch(`${API_BASE_URL}/coaches/${userId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -57,9 +56,11 @@ const Profile = () => {
   const handleUpdate = (updatedData) => {
     setProfileData({ ...profileData, ...updatedData });
     setFlashMessage("Profil mis à jour");
+    
     setTimeout(() => {
       setFlashMessage(null);
-    }, 3000);
+      window.location.reload();
+    }, 4000);
   };
 
   const handleCloseForm = () => {
@@ -89,7 +90,12 @@ const Profile = () => {
           />
         ) : (
           <>
+          {(profileData.image_url != undefined || profileData.image_url != null) ?
+          (
             <img src={profileData.image_url} alt='Avatar' />
+          ) : (
+            <p>Pas d'image disponible</p>
+          )}
             <br />
             <div className='mb-4'>
               <strong>Nom :</strong> {profileData.lastname}
@@ -100,6 +106,8 @@ const Profile = () => {
             <div className='mb-4'>
               <strong>Description :</strong> {profileData.description}
             </div>
+            {profileData.isCoach ? ( 
+              <>
             <h2 className='text-xl mb-4 text-center'>
               Les programmes d'entraînement que je propose
             </h2>
@@ -110,6 +118,8 @@ const Profile = () => {
                 </li>
               ))}
             </ul>
+            </>
+            ) : null}
           </>
         )}
       </div>
