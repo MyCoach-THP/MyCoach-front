@@ -37,6 +37,7 @@ const items = coaches.map((coach) => (
       coach.image_url ? `${coach.image_url}` : "https://via.placeholder.com/250"
     }
     coachId={coach.id}
+    userType='coach'
   />
 ));
 

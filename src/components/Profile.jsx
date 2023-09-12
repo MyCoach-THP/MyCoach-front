@@ -3,6 +3,8 @@ import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import { API_BASE_URL } from "../../config";
+import { useParams } from "react-router-dom";
+
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -11,9 +13,10 @@ const Profile = () => {
   const user_id = authState.user_id;
   const [isEditing, setIsEditing] = useState(false);
   const [flashMessage, setFlashMessage] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    const userId = user_id;
+    const userId = id || user_id;
     console.log(userId);
     fetch(`${API_BASE_URL}/coaches/${userId}`)
       .then((response) => response.json())
@@ -23,7 +26,7 @@ const Profile = () => {
       .catch((error) => {
         console.error("There was an error fetching the profile data!", error);
       });
-  }, [user_id]);
+  }, [user_id, id]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

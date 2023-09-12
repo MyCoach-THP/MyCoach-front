@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-const Card = ({ title, description, imageUrl, coachId }) => {
+const Card = ({ title, description, imageUrl, coachId, userType }) => {
+  const profileLink =
+    userType === "coach" ? `/coachProfile/${coachId}` : `/profile/${coachId}`;
   return (
-    <Link to={`/profile/${coachId}`}>
+    <Link to={profileLink}>
       <div
         className='bg-white rounded-lg overflow-hidden p-4 shadow-lg'
         style={{ width: "300px", height: "350px" }}>
