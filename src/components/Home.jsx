@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Card from "@/components/Card";
 import { API_BASE_URL } from "../../config";
 import CoachesCarousel from "./CoachesCarousel";
+import Description from "./Description";
 
 const Home = () => {
   const [coaches, setCoaches] = useState([]);
@@ -18,9 +19,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div className='h-screen flex flex-col'>
+    <div className='flex flex-col'>
       <div
-        className='bg-cover bg-center h-[80vh] flex items-center justify-center'
+        className='bg-cover bg-center h-[80vh] flex items-center justify-center shadow-xl mb-20'
         style={{
           backgroundImage:
             'url("https://www.pixelstalk.net/wp-content/uploads/2016/06/Free-HD-Fitness-Wallpapers-For-Desktop.jpg")',
@@ -44,6 +45,9 @@ const Home = () => {
             <h1 className='text-4xl font-bold'>Bienvenue</h1>
           )}
         </div>
+      </div>
+      <div>
+        <Description />
       </div>
       <div className='card-section-background'>
         <h1 className='text-2xl mb-4 text-center text-white font-bold mt-4'>

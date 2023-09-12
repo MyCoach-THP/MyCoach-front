@@ -49,6 +49,7 @@ $custom-blue-hover: #19b9e0;
   background-size: cover;
   background-position: center;
   height: 100%;
+  box-shadow: 0px -4px 15px rgba(0, 0, 0, 0.5);
 }
 
 .my-coach-div {
@@ -77,6 +78,12 @@ $custom-blue-hover: #19b9e0;
 .alice-carousel__next-btn:hover,
 .alice-carousel__prev-btn:hover {
   cursor: pointer;
+}
+
+.alice-carousel__stage-item {
+  width: 300px !important;
+  margin-right: 32px;
+  margin-left: 32px;
 }
 
 .policy {
@@ -169,18 +176,7 @@ $custom-blue-hover: #19b9e0;
   text-align: center;
 }
 
-.contactform {
-  position: relative;
-}
-
-.contactform .modal-content {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  max-width: 500px;
-  background-color: yellowgreen;
-  padding: 20px;
-  border-radius: 10px;
+.description-title {
+  font-size: 6vh;
+  font-family: "Bahnschrift";
 }
