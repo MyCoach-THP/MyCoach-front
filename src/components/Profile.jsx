@@ -4,6 +4,7 @@ import { authAtom } from "./authAtom";
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import { API_BASE_URL } from "../../config";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Profile = () => {
@@ -16,6 +17,8 @@ const Profile = () => {
   const { id } = useParams();
   const [displayedUserId, setDisplayedUserId] = useState(null);
   const [isCoach, setIsCoach] = useState(false);
+  const [showPlan, setShowPlan] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(false);
 
   useEffect(() => {
     const userId = id || user_id;
@@ -70,9 +73,15 @@ const Profile = () => {
     }, 4000);
   };
 
-  const handleCloseForm = () => {
+  const handleCloseForm = (plan) => {
+    setSelectedPlan(plan);
     setIsEditing(false);
   };
+
+  const handleClickPlan = (plan) =>{
+    setSelectedPlan(plan);
+    setShowPlan(true);
+  }
 
   return (
     <div className='background-style2'>
@@ -115,18 +124,20 @@ const Profile = () => {
             </div>
               {isCoach && trainingPlans.length > 0 && (
                 <>
-                
                   <h2 className='text-xl mb-4 text-center'>
                     Le(s) programme(s) d'entraînement(s) que je propose
                   </h2>
                   <ul className='list-decimal list-inside'>
                     {trainingPlans.map((plan) => (
-                      <li key={plan.id} className='m-2'>
-                        {plan.name}
-                      </li>
+                      <p>
+                        <button key = {plan.id} onClick={()=>handleClickPlan(plan)}>{plan.name}</button>
+                      </p>
                     ))}
                   </ul>
                   </>
+              )}
+              {showPlan && (
+                <p>{selectedPlan.description}</p>
               )}
             </>
         )}
