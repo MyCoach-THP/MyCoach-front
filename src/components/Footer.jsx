@@ -19,9 +19,6 @@ const Footer = () => {
             Politique de confidentialité
           </Link>
           <div className='contactform'>
-            <button type='button' className='modal-open'>
-              <i className='fas fa-envelope'></i> Contactez-nous
-            </button>
             <ContactForm />
           </div>
         </div>

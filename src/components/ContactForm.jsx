@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const ContactForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [message, setMessage] = useState("");
-  const [isActive, setIsActive] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
     _gotcha: "",
-    // subscribe: "yes",
-    // gender: "male",
-    // workExperience: "one-year",
   });
 
   const closeModal = () => {
     setIsOpen(false);
-    setFormSubmitted(false); // Reset formSubmitted state when modal closes
-    setMessage(""); // Reset message state when modal closes
+    setFormSubmitted(false);
+    setMessage("");
   };
 
   const handleInputChange = (event) => {
@@ -36,93 +32,83 @@ const ContactForm = () => {
 
     axios
       .post(
-        "https://getform.io/f/07cf8508-144a-4957-a3b9-32851cca0640",
+        "https://getform.io/f/bafc57d3-66dd-499d-83c4-beebd7506a28",
         formData,
         { headers: { Accept: "application/json" } }
       )
       .then((response) => {
-        setMessage(t("Contact.formthank"));
-        setFormSubmitted(true); // Set formSubmitted state to true on successful submission
+        setMessage("merci pour votre message!");
+        setFormSubmitted(true);
       })
       .catch((error) => {
         setMessage(`Error: ${error.message}`);
       });
   };
 
-
   return (
     <>
-      <a
-        href='#'
-        onClick={(e) => {
-          e.preventDefault();
+      <button
+        type='button'
+        onClick={() => {
           setIsOpen(true);
-        }}>
-        Contact
-      </a>
+        }}
+        className='text-white'>
+        <i className='fas fa-envelope'></i> Contactez-nous
+      </button>
 
       {isOpen && (
-        <div className='modal-background'>
-          <div className='modal-container '>
-            <div className='modal-header'>
-              <h2>Contact</h2>
-              <button onClick={closeModal}>&times;</button>
+        <div className='fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10'>
+          <div className='relative bg-white bg-opacity-80 p-8 rounded-lg w-full max-w-2xl'>
+            <div className='flex justify-between items-center mb-4'>
+              <h2 className='text-lg text-gray-900'>Contact</h2>
+              <button className='text-3xl text-gray-900' onClick={closeModal}>
+                &times;
+              </button>
             </div>
-            <div className='modal-content'>
-              {formSubmitted ? ( // Conditionally render based on formSubmitted state
-                <div className='success-message'>{message}</div>
+            <div>
+              {formSubmitted ? (
+                <div className='text-black'>{message}</div>
               ) : (
-                <>
-                  <form onSubmit={handleSubmit}>
-                    <label className='text-white formname'>
-                      Nom
-                      <input
-                        className='text-black'
-                        type='text'
-                        name='name'
-                        value={formData.name}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-
-                    <label className='text-white'>
-                      Email:
-                      <input
-                        className='text-black'
-                        type='email'
-                        name='email'
-                        value={formData.email}
-                        onChange={handleInputChange}
-                      />
-                    </label>
-
-                    <label className='text-white'>
-                      Message:
-                      <textarea
-                        className='text-black'
-                        name='message'
-                        value={formData.message}
-                        onChange={handleInputChange}
-                        rows='5' // You can adjust this to set the initial visible rows.
-                        cols='37' // You can adjust this to set the initial visible columns.
-                        style={{ padding: "4px" }}
-                      />
-                    </label>
-
+                <form onSubmit={handleSubmit}>
+                  <div className='mb-4'>
+                    <label className='block text-black mb-2'>Nom</label>
                     <input
-                      type='hidden'
-                      name='_gotcha'
-                      style={{ display: "none" }}
-                      value={formData._gotcha}
+                      type='text'
+                      name='name'
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className='w-full p-2 bg-white text-black rounded'
                     />
+                  </div>
 
-                    <label className='message text-white'>
-                      Message
-                    </label>
-                    <button type='formsubmit'>Envoyer</button>
-                  </form>
-                  <div>{message}</div>
-                </>
+                  <div className='mb-4'>
+                    <label className='block text-black mb-2'>Email</label>
+                    <input
+                      type='email'
+                      name='email'
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className='w-full p-2 bg-white text-black rounded'
+                    />
+                  </div>
+
+                  <div className='mb-4'>
+                    <label className='block text-black mb-2'>Message</label>
+                    <textarea
+                      name='message'
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      rows='5'
+                      className='w-full p-2 bg-white text-black rounded'
+                    />
+                  </div>
+
+                  <button
+                    type='submit'
+                    className='bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+                    Envoyer
+                  </button>
+                </form>
               )}
             </div>
           </div>
