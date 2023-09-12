@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
 import { API_BASE_URL } from "../../config";
+import { Link } from "react-router-dom";
+
 
 
 const SignIn = () => {
@@ -92,6 +94,9 @@ const SignIn = () => {
               </button>
             </div>
           </form>
+          <div className='mt-4 text-center'>
+            <Link to='/forgotpassword'>Mot de passe oublié?</Link>
+          </div>
         </div>
       </div>
     </div>
