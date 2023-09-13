@@ -39,7 +39,7 @@ const SignIn = () => {
       })
       .then((data) => {
         if (data.user) {
-          console.log("data : ");
+          console.log("cartlist : ");
           console.log(data.user.cartlist);
           const userId = data.user.id;
           setAuthState({
@@ -56,6 +56,7 @@ const SignIn = () => {
           localStorage.setItem("token", authToken);
           localStorage.setItem("user_id", userId.toString());
           localStorage.setItem("is_coach", data.user.is_coach.toString());
+          localStorage.setItem("cartlist", data.user.cartlist);
           navigate("/");
         } else {
           console.error(

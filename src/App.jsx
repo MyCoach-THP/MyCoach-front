@@ -31,6 +31,13 @@ function App() {
         isLoggedIn: true,
       });
 
+      if (localStorage.getItem("cartlist")){
+        let items = localStorage.getItem("cartlist").split(',');
+        console.log("items: ");
+        setCart({cartlist: items})
+        console.log(items);
+      }
+
       setCartCount(cart.cartlist.length);
     }
   }, []);
