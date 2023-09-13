@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
+import { useAtom } from "jotai";
+import { authAtom } from "./authAtom";
+import { cartAtom } from "./cartAtom";
 
 const ShoppingCart = () => {
-  const [myCard, setMyCard] = useState(["test", "haha", "blabla"]);
+  const [authState, setAuthState] = useAtom(authAtom);
+  const [cart, setCart] = useAtom(cartAtom);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(()=>{
+    console.log(cart.cartlist);
+  },[])
 
   const handleDeleteArticle = (indexArticle) => {
-    const updatedCard = [...myCard];
-    updatedCard.splice(indexArticle, 1);
-
-    setMyCard(updatedCard);
+    // const updatedCard = [...myCard];
+    // updatedCard.splice(indexArticle, 1);
+    // setMyCard(updatedCard);
   };
 
   return (
@@ -16,7 +24,7 @@ const ShoppingCart = () => {
         <div className='flex justify-center items-center min-h-screen opacity-90'>
           <div className='bg-white p-8 rounded shadow-md mt-[-200px]'>
             <h1 className='text-2xl mb-4 text-center'>Mon panier</h1>
-            {myCard.length != 0 ? (
+            {/* {myCard.length != 0 ? (
               <>
                 <p className='text-xl mb-4 text-center'>
                   Vous avez {myCard.length} article(s) dans votre panier
@@ -38,7 +46,7 @@ const ShoppingCart = () => {
               </>
             ) : (
               "Votre panier est vide"
-            )}
+            )} */}
           </div>
         </div>
       </div>

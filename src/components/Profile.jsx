@@ -104,6 +104,7 @@ fetch(`${API_BASE_URL}/training_plans/?coach_id=${id}`, {
               ...prevCart,
               cartlist: [...prevCart.cartlist, selectedPlan.id],
             }));
+            localStorage.setItem("cartlist", [...cart.cartlist, selectedPlan.id]);
           } else {
             throw new Error("Erreur lors de l'ajout au panier");
           }
