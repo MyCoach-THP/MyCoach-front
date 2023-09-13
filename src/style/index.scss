@@ -207,6 +207,15 @@ $custom-blue-hover: #19b9e0;
   height: auto;
   margin: auto;
   display: block;
+  filter: drop-shadow(0 -1mm 3mm rgb(0, 110, 255));
+  user-select: none;
+  animation: rotateit 1s linear infinite;
+}
+
+@keyframes rotateit{
+  0%{transform: scale(1);}
+  50%{transform: scale(5);}
+  100%{transform: scale(1);}
 }
 
 .description-text-small {
