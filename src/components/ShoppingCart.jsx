@@ -2,20 +2,78 @@ import { useState, useEffect } from "react";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
 import { cartAtom } from "./cartAtom";
+import { API_BASE_URL } from "../../config";
 
 const ShoppingCart = () => {
   const [authState, setAuthState] = useAtom(authAtom);
   const [cart, setCart] = useAtom(cartAtom);
   const [cartCount, setCartCount] = useState(0);
+  const [myCart, setMyCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  useEffect(()=>{
-    console.log(cart.cartlist);
-  },[])
+  const user_id = authState.user_id;
 
-  const handleDeleteArticle = (indexArticle) => {
-    // const updatedCard = [...myCard];
-    // updatedCard.splice(indexArticle, 1);
-    // setMyCard(updatedCard);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    fetch(`${API_BASE_URL}/training_plans/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+  
+        const cartlistIDs = cart.cartlist.map(id => parseInt(id));
+  
+        const filteredTrainingPlans = data.filter((trainingPlan) =>
+          cartlistIDs.includes(trainingPlan.id)
+        );
+
+        setMyCart(filteredTrainingPlans);
+        console.log(filteredTrainingPlans);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching training plans!", error);
+      });
+  }, [cart]);
+
+  useEffect(() => {
+    const newTotalPrice = myCart.reduce((acc, item) => acc + parseInt(item.price), 0);
+    setTotalPrice(newTotalPrice);
+  }, [myCart]);
+
+  const handleDeleteFromCartClick = (itemId) => {
+    if (user_id != null) {
+      const token = localStorage.getItem("token");
+  
+      fetch(`${API_BASE_URL}/cart/remove/?product_id=${itemId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            setCart((prevCart) => ({
+              ...prevCart,
+              cartlist: prevCart.cartlist.filter((item) => item !== itemId),
+            }));
+  
+            const updatedCartlist = cart.cartlist.filter((item) => item !== itemId);
+            localStorage.setItem("cartlist", JSON.stringify(updatedCartlist));
+          } else {
+            throw new Error("Erreur lors de la suppression du panier");
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la suppression du panier :", error);
+        });
+    } else {
+      navigate("/signin");
+    }
   };
 
   return (
@@ -24,29 +82,23 @@ const ShoppingCart = () => {
         <div className='flex justify-center items-center min-h-screen opacity-90'>
           <div className='bg-white p-8 rounded shadow-md mt-[-200px]'>
             <h1 className='text-2xl mb-4 text-center'>Mon panier</h1>
-            {/* {myCard.length != 0 ? (
+            {myCart.length != 0 ? (
               <>
                 <p className='text-xl mb-4 text-center'>
-                  Vous avez {myCard.length} article(s) dans votre panier
+                  Vous avez {myCart.length} article(s) dans votre panier
                 </p>
-                <ul>
-                  {myCard.map((item, index) => (
-                    <li
-                      className='flex justify-between items-center m-2'
-                      key={index}>
-                      {item}
-                      <button
-                        className='justify-end bg-red-500 hover:bg-red-700 text-white font-bold py-0.5 px-4 rounded'
-                        onClick={() => handleDeleteArticle(index)}>
-                        Supprimer l'article
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                
+                {myCart.map(item=>(
+                  <>
+                  <p className="m-2">{item.name} {item.price}€ <button className="delete-from-cart" onClick={()=>handleDeleteFromCartClick(item.id)}>Supprimer du panier</button></p>
+                  </>
+                ))}
+                <h1 className='text-2xl mb-4 text-center totalprice'>Total : {totalPrice}€</h1>
+                <button className="buybutton flex justify-center items-center">Passer à la caisse</button>
               </>
             ) : (
               "Votre panier est vide"
-            )} */}
+            )}
           </div>
         </div>
       </div>
