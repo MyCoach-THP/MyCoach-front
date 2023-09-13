@@ -57,6 +57,12 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
 
   return (
     <>
+      <img
+        src={profileData.image_url}
+        alt='User Profile Picture'
+        className='profile-picture'
+      />
+
       <div className='mb-4'>
         <strong>Nom :</strong> {profileData.lastname}
       </div>
@@ -72,19 +78,23 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
       <ul className='list-decimal list-inside'>
         {trainingPlans.map((plan) => (
           <p>
-          <button key={plan.id} className = "item-selection" onClick={()=>handleClickPlan(plan)}> {plan.name}: {plan.price}€ </button>
+            <button
+              key={plan.id}
+              className='item-selection'
+              onClick={() => handleClickPlan(plan)}>
+              {" "}
+              {plan.name}: {plan.price}€{" "}
+            </button>
           </p>
         ))}
-      </ul> 
+      </ul>
 
       {showPlan && (
         <div
           className='popup-plan bg-white rounded p-4 mx-auto w-1/2'
           style={centerPopupStyle}>
           {" "}
-          <span
-            className='popup-plan-close'
-            onClick={handleClosePlan}>
+          <span className='popup-plan-close' onClick={handleClosePlan}>
             X
           </span>
           <p className='mt-5 mb-2'>
@@ -99,7 +109,10 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
             <strong>Prix : </strong>
             {selectedPlan.price} €
           </p>
-          <button className='button-add-cart'  onClick={handleAddToCartClick}> Ajouter au panier </button>
+          <button className='button-add-cart' onClick={handleAddToCartClick}>
+            {" "}
+            Ajouter au panier{" "}
+          </button>
         </div>
       )}
     </>
