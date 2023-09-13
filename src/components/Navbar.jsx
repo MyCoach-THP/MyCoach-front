@@ -6,7 +6,7 @@ import { authAtom } from "./authAtom";
 import { API_BASE_URL } from "../../config";
 
 
-const Navbar = () => {
+const Navbar = (props) => {
   const navigate = useNavigate();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const [authState, setAuthState] = useAtom(authAtom);
@@ -47,7 +47,7 @@ const Navbar = () => {
               ) : (
               <>
                 <Link to='shoppingcart' className='nav-link'>
-                Mon Panier
+                Mon Panier <span className="cartcount">{props.cartCount}</span>
                 </Link>
               </>
               )}
