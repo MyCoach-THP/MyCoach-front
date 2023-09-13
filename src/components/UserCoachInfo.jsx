@@ -7,13 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const UserCoachInfo = ({ profileData, trainingPlans }) => {
 
-  const [allPlans, setAllPlans] = useState([]);
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [authState] = useAtom(authAtom);
   const user_id = authState.user_id;
   const [cart, setCart] = useAtom(cartAtom);
-  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
   const handleClickPlan = (plan) => {
@@ -56,7 +54,6 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
     left: "35%",
     transform: "translate(-50%, -50%)",
   };
-
 
   return (
     <>
