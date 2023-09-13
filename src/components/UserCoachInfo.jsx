@@ -3,16 +3,16 @@ import { API_BASE_URL } from "../../config";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
 import { cartAtom } from "./cartAtom";
+import { useNavigate } from "react-router-dom";
 
 const UserCoachInfo = ({ profileData, trainingPlans }) => {
 
-  const [allPlans, setAllPlans] = useState([]);
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [authState] = useAtom(authAtom);
   const user_id = authState.user_id;
   const [cart, setCart] = useAtom(cartAtom);
-  const [cartCount, setCartCount] = useState(0);
+  const navigate = useNavigate();
 
   const handleClickPlan = (plan) => {
     setSelectedPlan(plan);
@@ -44,6 +44,7 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
         }
       });
     } else {
+      console.log("test");
       navigate("/signin");
     }
   };
@@ -53,7 +54,6 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
     left: "35%",
     transform: "translate(-50%, -50%)",
   };
-
 
   return (
     <>

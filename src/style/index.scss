@@ -253,7 +253,7 @@ $custom-blue-hover: #19b9e0;
 }
 
 @keyframes opening {
-  0%{transform: scale(0); border-radius: 100%;}
+  0%{transform: scale(0); border-radius: 50%;}
   100%{transform: scale(1); border-radius: 5px;}
 }
 
