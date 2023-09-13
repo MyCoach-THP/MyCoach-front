@@ -1,0 +1,43 @@
+.training-plan-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.training-plan-title {
+  flex: 9;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.training-plan-title:hover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #000; /* Couleur de la ligne */
+  animation: underline 0.3s ease-in-out;
+}
+
+@keyframes underline {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.training-plan-price {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+  padding-left: 5px;
+}
+.table-header {
+  background-color: rgb(51, 206, 233);
+  width: 100%;
+}
