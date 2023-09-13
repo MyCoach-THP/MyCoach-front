@@ -42,21 +42,21 @@ const Profile = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     console.log(id);
-    fetch(`${API_BASE_URL}/training_plans/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setTrainingPlans(data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching training plans!", error);
-      });
+fetch(`${API_BASE_URL}/training_plans/?coach_id=${id}`, {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+})
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+    setTrainingPlans(data);
+  })
+  .catch((error) => {
+    console.error("There was an error fetching training plans!", error);
+  });
   }, [id]);
 
   if (!profileData) {
@@ -128,12 +128,12 @@ const Profile = () => {
           />
         ) : (
           <>
-          {(profileData.image_url != undefined || profileData.image_url != null) ?
-          (
-            <img src={profileData.image_url} alt='Avatar' />
-          ) : (
-            <p>Pas d'image disponible</p>
-          )}
+            {profileData.image_url != undefined ||
+            profileData.image_url != null ? (
+              <img src={profileData.image_url} alt='Avatar' />
+            ) : (
+              <p>Pas d'image disponible</p>
+            )}
             <br />
             <div className='mb-4'>
               <strong>Nom :</strong> {profileData.lastname}
@@ -144,33 +144,58 @@ const Profile = () => {
             <div className='mb-4'>
               <strong>Description :</strong> {profileData.description}
             </div>
-              {isCoach && trainingPlans.length > 0 && (
-                <>
-                  <h2 className='text-xl mb-4 text-center'>
-                    Le(s) programme(s) d'entraînement(s) que je propose
-                  </h2>
-                  <ul className='list-decimal list-inside'>
-                    {trainingPlans.map((plan) => (
-                      <p>
-                        <button key = {plan.id} onClick={()=>handleClickPlan(plan)}>{plan.name}</button>
-                      </p>
-                    ))}
-                  </ul>
-                  </>
-              )}
-              {showPlan && (
-                <div className="popup-plan">
-                  <span className="popup-plan-close" onClick={handleClosePlan}>X</span>
-                <p className="mt-5 mb-2"><strong>Proposé par : </strong>{profileData.firstname}</p>
-                <p className="mb-2"><strong>Nom du programme : </strong>{selectedPlan.name}</p>
-                <p className="mb-2"><strong>Description : </strong>{selectedPlan.description}</p>
-                <p className="mb-2"><strong>Prix : </strong>{selectedPlan.price} €</p>
-                <button className="button-add-cart" onClick={handleAddToCartClick}>
-                Ajouter au panier
-                 </button>
-                </div>
-              )}
-            </>
+            {isCoach && trainingPlans.length > 0 && (
+              <>
+                <h2 className='table-header text-xl mb-4 text-center'>
+                  Le(s) programme(s) d'entraînement(s) que je propose:
+                </h2>
+
+                <ul className='list-decimal list-inside'>
+                  {trainingPlans.map((plan) => (
+                    <div className='training-plan-row'>
+                      <div className='training-plan-title'>
+                        <button
+                          key={plan.id}
+                          onClick={() => handleClickPlan(plan)}>
+                          {plan.name}:
+                        </button>
+                      </div>
+                      <div className='training-plan-price'>{plan.price}€</div>
+                    </div>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {showPlan && (
+              <div className='popup-plan'>
+                <span className='popup-plan-close' onClick={handleClosePlan}>
+                  X
+                </span>
+                <p className='mt-5 mb-2'>
+                  <strong>Proposé par : </strong>
+                  {profileData.firstname}
+                </p>
+                <p className='mb-2'>
+                  <strong>Nom du programme : </strong>
+                  {selectedPlan.name}
+                </p>
+                <p className='mb-2'>
+                  <strong>Description : </strong>
+                  {selectedPlan.description}
+                </p>
+                <p className='mb-2'>
+                  <strong>Prix : </strong>
+                  {selectedPlan.price} €
+                </p>
+                <button
+                  className='button-add-cart'
+                  onClick={handleAddToCartClick}>
+                  Ajouter au panier
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
