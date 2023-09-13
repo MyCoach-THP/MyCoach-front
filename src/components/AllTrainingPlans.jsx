@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { API_BASE_URL } from "../../config";
+import { useAtom } from "jotai";
+import { authAtom } from "./authAtom";
+import { cartAtom } from "./cartAtom";
 
 const AllTrainingPlans = () => {
   const [allPlans, setAllPlans] = useState([]);
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
-
+  const [authState] = useAtom(authAtom);
+  const user_id = authState.user_id;
+  const [cart, setCart] = useAtom(cartAtom);
+  const [cartCount, setCartCount] = useState(0);
 
 useEffect(() => {
   fetch(`${API_BASE_URL}/training_plans/`)
@@ -43,10 +49,7 @@ useEffect(() => {
         error
       );
     });
-}, []);
-
-
-
+    }, []);
 
     const handleClickPlan = (plan) => {
       setSelectedPlan(plan);
@@ -57,7 +60,14 @@ useEffect(() => {
       setShowPlan(false);
     };
   
-    const handleAddToCartClick = () => {
+    const centerPopupStyle = {
+      top: "20%",
+      left: "35%",
+      transform: "translate(-50%, -50%)",
+    };
+  
+  const handleAddToCartClick = () => {
+    if (user_id != null) {
       const token = localStorage.getItem("token");
 
       fetch(`${API_BASE_URL}/cart/add/?product_id=${selectedPlan.id}`, {
@@ -67,18 +77,18 @@ useEffect(() => {
         },
       }).then((response) => {
         if (response.ok) {
-          const data = response.json();
-          console.log(data);
+          setCart((prevCart) => ({
+            ...prevCart,
+            cartlist: [...prevCart.cartlist, selectedPlan.id],
+          }));
+          localStorage.setItem("cartlist", [...cart.cartlist, selectedPlan.id]);
         } else {
           throw new Error("Erreur lors de l'ajout au panier");
         }
       });
-    };
-  
-  const centerPopupStyle = {
-    top: "20%",
-    left: "35%",
-    transform: "translate(-50%, -50%)",
+    } else {
+      navigate("/signin");
+    }
   };
 
 
@@ -113,12 +123,11 @@ return (
                 <td>
                   <button
                     onClick={() => handleClickPlan(plan)}
-                    className='text-blue-500 hover:underline'>
+                    className='item-selection'>
                     {plan.name}
                   </button>
                 </td>
                 <td>{plan.firstname}</td>
-
                 <td>{plan.price}€</td>
               </tr>
             ))}
@@ -130,12 +139,7 @@ return (
           className='popup-plan bg-white rounded p-4 mx-auto w-1/2'
           style={centerPopupStyle}>
           {" "}
-          {/* Centrage et largeur */}
-          <span
-            className='popup-plan-close text-red-500 hover:text-red-700 cursor-pointer'
-            onClick={handleClosePlan}>
-            X
-          </span>
+          <span className='popup-plan-close' onClick={handleClosePlan}>X</span>
           <p className='mt-5 mb-2'>
             <strong>Nom du programme : </strong>
             {selectedPlan.name}
@@ -148,11 +152,7 @@ return (
             <strong>Prix : </strong>
             {selectedPlan.price} €
           </p>
-          <button
-            className='button-add-cart bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-            onClick={handleAddToCartClick}>
-            Ajouter au panier
-          </button>
+          <button className='button-add-cart' onClick={handleAddToCartClick}> Ajouter au panier</button>
         </div>
       )}
     </div>
