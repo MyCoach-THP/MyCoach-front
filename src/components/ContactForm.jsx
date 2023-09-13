@@ -52,8 +52,8 @@ const ContactForm = () => {
         onClick={() => {
           setIsOpen(true);
         }}
-        className='text-white'>
-        <i className='fas fa-envelope'></i> Contactez-nous
+        className='text-white hover:underline'>
+        Contactez-nous
       </button>
 
       {isOpen && (
