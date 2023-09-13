@@ -42,7 +42,11 @@ const Home = () => {
               </Link>
             </>
           ) : (
-            <h1 className='text-4xl font-bold'>Bienvenue</h1>
+            <Link
+              to='/alltrainingplans' // change this to the actual route
+              className='text-4xl font-bold text-white'>
+              Découvrez tous les plans
+            </Link>
           )}
         </div>
       </div>
