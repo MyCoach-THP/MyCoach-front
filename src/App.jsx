@@ -14,6 +14,7 @@ import ShoppingCart from "./components/ShoppingCart";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import ContactForm from "./components/ContactForm";
+import AllTrainingPlans from "./components/AllTrainingPlans";
 import { useAtom } from "jotai";
 import { authAtom } from "./components/authAtom";
 import { cartAtom } from "./components/cartAtom";
@@ -49,7 +50,7 @@ function App() {
   return (
     <div className='main-content flex flex-col min-h-screen'>
       <Router>
-        <Navbar cartCount = {cart.cartlist.length}/>
+        <Navbar cartCount={cart.cartlist.length} />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
@@ -60,6 +61,7 @@ function App() {
           <Route path='/training_plan/:id' element={<TrainingPlanView />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/ContactForm' element={<ContactForm />} />
+          <Route path='/AllTrainingPlans' element={<AllTrainingPlans />} />
           <Route path='/profile/:id' element={<Profile />} />
           <Route
             path='/coachProfile/:id'
