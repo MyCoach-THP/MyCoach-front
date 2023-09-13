@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
+import { cartAtom } from "./cartAtom";
 import ProfileUpdateForm from "./ProfileUpdateForm";
+import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState(null);
   const [trainingPlans, setTrainingPlans] = useState([]);
   const [authState] = useAtom(authAtom);
@@ -19,11 +22,12 @@ const Profile = () => {
   const [isCoach, setIsCoach] = useState(false);
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(false);
+  const [cart, setCart] = useAtom(cartAtom);
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     const userId = id || user_id;
-    console.log(userId);
-     setDisplayedUserId(userId); 
+     setDisplayedUserId(userId);
     fetch(`${API_BASE_URL}/coaches/${userId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -41,7 +45,6 @@ const Profile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(id);
 fetch(`${API_BASE_URL}/training_plans/?coach_id=${id}`, {
   method: "GET",
   headers: {
@@ -51,7 +54,6 @@ fetch(`${API_BASE_URL}/training_plans/?coach_id=${id}`, {
 })
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
     setTrainingPlans(data);
   })
   .catch((error) => {
@@ -88,21 +90,27 @@ fetch(`${API_BASE_URL}/training_plans/?coach_id=${id}`, {
   }
 
   const handleAddToCartClick = () =>{
-    const token = localStorage.getItem("token");
+    if (user_id!=null){
+      const token = localStorage.getItem("token");
 
-    fetch(`${API_BASE_URL}/cart/add/?product_id=${selectedPlan.id}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    }).then((response) => {
-        if (response.ok) {
-          const data = response.json();
-          console.log(data);
-        } else {
-          throw new Error("Erreur lors de l'ajout au panier");
+      fetch(`${API_BASE_URL}/cart/add/?product_id=${selectedPlan.id}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
         }
-      })
+      }).then((response) => {
+          if (response.ok) {
+            setCart((prevCart) => ({
+              ...prevCart,
+              cartlist: [...prevCart.cartlist, selectedPlan.id],
+            }));
+          } else {
+            throw new Error("Erreur lors de l'ajout au panier");
+          }
+        })
+    } else {
+      navigate("/signin");
+    }
   };
 
   return (

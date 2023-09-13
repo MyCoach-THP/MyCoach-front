@@ -4,4 +4,5 @@ export const authAtom = atom({
   isLoggedIn: false,
   token: null,
   user_id: null,
+  is_coach: false
 });

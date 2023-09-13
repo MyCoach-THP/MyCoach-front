@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
+import { cartAtom } from "./cartAtom";
 import { API_BASE_URL } from "../../config";
 import { Link } from "react-router-dom";
-
-
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [authState, setAuthState] = useAtom(authAtom);
+  const [cart, setCart] = useAtom(cartAtom);
   let authToken;
 
   const handleSubmit = (e) => {
@@ -34,11 +34,13 @@ const SignIn = () => {
           authToken = authHeader.split(" ")[1];
           return response.json();
         } else {
-          throw new Error("Inscription échouée");
+          throw new Error("Echec de connexion");
         }
       })
       .then((data) => {
         if (data.user) {
+          console.log("data : ");
+          console.log(data.user.cartlist);
           const userId = data.user.id;
           setAuthState({
             isLoggedIn: true,
@@ -46,6 +48,10 @@ const SignIn = () => {
             user_id: userId,
             is_coach: data.user.is_coach,
           });
+          setCart({
+            cartlist: data.user.cartlist
+          });
+
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("token", authToken);
           localStorage.setItem("user_id", userId.toString());
