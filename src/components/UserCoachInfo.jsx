@@ -54,6 +54,11 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
     }
   };
 
+  useEffect(()=>{
+
+  }
+  ,[cart])
+
   const centerPopupStyle = {
     top: "20%",
     left: "35%",
