@@ -10,14 +10,24 @@ import TrainingPlanView from "@/components/TrainingPlanView";
 import Confidentiality from "./pages/Confidentiality";
 import Legal from "./pages/Legal";
 import Profile from "./components/Profile";
-import ShoppingCart from "./components/ShoppingCart";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import ContactForm from "./components/ContactForm";
 import AllTrainingPlans from "./components/AllTrainingPlans";
+import StripeContainer from "./components/StripeContainer";
 import { useAtom } from "jotai";
 import { authAtom } from "./components/authAtom";
 import { cartAtom } from "./components/cartAtom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import ShoppingCart from "./components/ShoppingCart";
+import Success from "./components/Success";
+import Cancel from "./components/Cancel";
+
+
+const stripePromise = loadStripe(
+  "pk_test_51N8h8sAhrOPnCIzT2ugqqe9aJvcLkKKKpomNhFpG9DecpeMucOPevdw1Pcxv3nWcp5MccbwzjP6ttuzAdXklMgOX00vBWvPGrf"
+);
 
 function App() {
   const [authState, setAuthState] = useAtom(authAtom);
@@ -60,14 +70,24 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/ContactForm' element={<ContactForm />} />
           <Route path='/AllTrainingPlans' element={<AllTrainingPlans />} />
+          <Route path='/StripeContainer' element={<StripeContainer />} />
           <Route path='/profile/:id' element={<Profile />} />
           <Route
             path='/coachProfile/:id'
             element={<Profile userType='coach' />}
           />
-          <Route path='/shoppingcart' element={<ShoppingCart />} />
+          <Route
+            path='/shoppingcart'
+            element={
+              <Elements stripe={stripePromise}>
+                <ShoppingCart />
+              </Elements>
+            }
+          />{" "}
           <Route path='/ForgotPassword' element={<ForgotPassword />} />
           <Route path='/ResetPassword/:token' element={<ResetPassword />} />
+          <Route path='/success' element={<Success />} />
+          <Route path='/cancel' element={<Cancel />} />
         </Routes>
         <Footer />
       </Router>
