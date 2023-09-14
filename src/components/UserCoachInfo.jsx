@@ -23,7 +23,12 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
     setShowPlan(false);
   };
 
-  const handleAddToCartClick = () => {
+  const handleAddToCartClick = (event) => {
+
+    event.disabled = true;
+    event.textContent = "Le programme est déjà dans votre panier";
+    event.className = "button-add-cart-disabled";
+
     if (user_id != null) {
       const token = localStorage.getItem("token");
 
@@ -109,10 +114,17 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
             <strong>Prix : </strong>
             {selectedPlan.price} €
           </p>
-          <button className='button-add-cart' onClick={handleAddToCartClick}>
-            {" "}
-            Ajouter au panier{" "}
-          </button>
+          <button
+              key={selectedPlan.id}
+              className={`${cart.cartlist.includes(selectedPlan.id.toString()) ? 'button-add-cart-disabled' : 'button-add-cart'}`}
+              onClick={(event) => {
+                if (!cart.cartlist.includes(selectedPlan.id.toString())) {
+                  handleAddToCartClick(event.currentTarget);
+                }
+              }}
+              disabled={cart.cartlist.includes(selectedPlan.id.toString())} >
+              {!cart.cartlist.includes(selectedPlan.id.toString()) ? "Ajouter au panier" : "Le programme est déjà dans votre panier"}
+            </button>  
         </div>
       )}
     </>
