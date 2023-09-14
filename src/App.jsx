@@ -44,6 +44,7 @@ function App() {
 
       if (localStorage.getItem("cartlist")){
         let items = localStorage.getItem("cartlist").split(',');
+        console.log(items);
         setCart({cartlist: items})
       }
 

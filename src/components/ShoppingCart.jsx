@@ -59,6 +59,7 @@ const ShoppingCart = () => {
         },
       })
         .then((response) => {
+          console.log(response);
           if (response.ok) {
             setCart((prevCart) => ({
               ...prevCart,
@@ -66,7 +67,7 @@ const ShoppingCart = () => {
             }));
   
             const updatedCartlist = cart.cartlist.filter((item) => item !== itemId);
-            localStorage.setItem("cartlist", JSON.stringify(updatedCartlist));
+            localStorage.setItem("cartlist", updatedCartlist);
           } else {
             throw new Error("Erreur lors de la suppression du panier");
           }
