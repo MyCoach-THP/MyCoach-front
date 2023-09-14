@@ -212,6 +212,10 @@ $custom-blue-hover: #19b9e0;
   animation: rotateit 1s linear infinite;
 }
 
+.disabled{
+  background-color: grey !important;
+}
+
 // @keyframes rotateit{
 //   0%{transform: scale(1);}
 //   50%{transform: scale(5);}
@@ -276,6 +280,15 @@ $custom-blue-hover: #19b9e0;
 .button-add-cart:hover{
   background-color: rgb(253, 180, 43);
 }
+
+.button-add-cart-disabled{
+  background-color: rgb(167, 167, 167);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: default;
+}
+
 
 .cartcount {
   background-color: #00ccff;
