@@ -70,7 +70,7 @@ useEffect(() => {
     if (user_id != null) {
       const token = localStorage.getItem("token");
 
-      fetch(`${API_BASE_URL}/cart/add/?product_id=${selectedPlan.id}`, {
+      fetch(`${API_BASE_URL}/cart/add/?training_plan_id=${selectedPlan.id}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
