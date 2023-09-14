@@ -11,3 +11,11 @@ export const cartAtom = atom({
     }));
   },
 });
+
+export const selectedPlanAtom = atom({
+  id: null,
+  price: null,
+});
+
+export const purchasedItemsAtom = atom([]); 
+

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
-import { cartAtom } from "./cartAtom";
+import { cartAtom, selectedPlanAtom, purchasedItemsAtom } from "./cartAtom";
 import { API_BASE_URL } from "../../config";
 import { useStripe } from "@stripe/react-stripe-js";
 
-
-
 const ShoppingCart = () => {
   const [authState, setAuthState] = useAtom(authAtom);
+  const [, setSelectedPlan] = useAtom(selectedPlanAtom);
+  const [, setPurchasedItems] = useAtom(purchasedItemsAtom);
   const [cart, setCart] = useAtom(cartAtom);
   const [cartCount, setCartCount] = useState(0);
   const [myCart, setMyCart] = useState([]);
@@ -20,9 +20,9 @@ const ShoppingCart = () => {
     getCart();
   }, []);
 
-  const getCart = () =>{
+  const getCart = () => {
     const token = localStorage.getItem("token");
-  
+
     fetch(`${API_BASE_URL}/cart/get`, {
       method: "GET",
       headers: {
@@ -33,13 +33,13 @@ const ShoppingCart = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.cartlist);
-        setCart({cartlist: data.cartlist});
+        setCart({ cartlist: data.cartlist });
         setCartCount(data.cartlist.length);
       })
       .catch((error) => {
         console.error("There was an error fetching cart data!", error);
       });
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -53,9 +53,8 @@ const ShoppingCart = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-  
-        const cartlistIDs = cart.cartlist.map(id => parseInt(id));
-  
+        const cartlistIDs = cart.cartlist.map((id) => parseInt(id));
+
         const filteredTrainingPlans = data.filter((trainingPlan) =>
           cartlistIDs.includes(trainingPlan.id)
         );
@@ -68,14 +67,17 @@ const ShoppingCart = () => {
   }, [cart]);
 
   useEffect(() => {
-    const newTotalPrice = myCart.reduce((acc, item) => acc + parseInt(item.price), 0);
+    const newTotalPrice = myCart.reduce(
+      (acc, item) => acc + parseInt(item.price),
+      0
+    );
     setTotalPrice(newTotalPrice);
   }, [myCart]);
 
   const handleDeleteFromCartClick = (itemId) => {
     if (user_id != null) {
       const token = localStorage.getItem("token");
-  
+
       fetch(`${API_BASE_URL}/cart/remove/?training_plan_id=${itemId}`, {
         method: "DELETE",
         headers: {
@@ -85,7 +87,6 @@ const ShoppingCart = () => {
         .then((response) => {
           console.log(response);
           if (response.ok) {
-
             getCart();
           } else {
             throw new Error("Erreur lors de la suppression du panier");
@@ -101,9 +102,9 @@ const ShoppingCart = () => {
 
   const stripe = useStripe();
 
-  const handleCheckout = async () => {
+const handleCheckout = async () => {
+  try {
     const token = localStorage.getItem("token");
-
     const response = await fetch(`${API_BASE_URL}/create_stripe_session`, {
       method: "POST",
       headers: {
@@ -119,7 +120,23 @@ const ShoppingCart = () => {
 
     if (result.error) {
       console.error(result.error.message);
+      return; // exit if Stripe checkout fails
     }
+
+    // Pass the cart items to the Success component
+    setSelectedPlan({
+      id: generateUniqueID(myCart),
+      price: totalPrice,
+    });
+    setPurchasedItems(myCart); // Update purchasedItemsAtom with cart items
+  } catch (error) {
+    console.error("An error occurred during checkout: ", error);
+  }
+};
+
+  const clearCart = () => {
+    setCart({ cartlist: [] });
+    // Add logic to clear the cart in the backend if necessary
   };
 
   return (

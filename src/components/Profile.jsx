@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import UserRegularInfo from "./UserRegularInfo";
 import UserCoachInfo from "./UserCoachInfo";
+import axios from "axios";
+
 
 
 const Profile = () => {
@@ -26,6 +28,14 @@ const Profile = () => {
   const [selectedPlan, setSelectedPlan] = useState(false);
   const [cart, setCart] = useAtom(cartAtom);
   const [cartCount, setCartCount] = useState(0);
+  const fetchPurchaseHistory = async () => {
+    try {
+      const response = await axios.get("/purchase_histories"); // Assurez-vous que cette URL correspond à l'endpoint Rails
+      return response.data;
+    } catch (error) {
+      console.error("An error occurred while fetching data: ", error);
+    }
+  };
 
   useEffect(() => {
     const userId = id || user_id;
@@ -118,6 +128,8 @@ const Profile = () => {
       navigate("/signin");
     }
   };
+
+  
 
   return (
     <div className='background-style2'>
