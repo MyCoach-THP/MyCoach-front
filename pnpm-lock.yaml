@@ -14,6 +14,12 @@ dependencies:
   '@fortawesome/react-fontawesome':
     specifier: ^0.2.0
     version: 0.2.0(@fortawesome/fontawesome-svg-core@6.4.2)(react@18.2.0)
+  '@stripe/react-stripe-js':
+    specifier: ^2.3.0
+    version: 2.3.0(@stripe/stripe-js@2.1.5)(react-dom@18.2.0)(react@18.2.0)
+  '@stripe/stripe-js':
+    specifier: ^2.1.5
+    version: 2.1.5
   axios:
     specifier: ^1.5.0
     version: 1.5.0
@@ -652,6 +658,23 @@ packages:
   /@remix-run/router@1.8.0:
     resolution: {integrity: sha512-mrfKqIHnSZRyIzBcanNJmVQELTnX+qagEDlcKO90RgRBVOZGSGvZKeDihTRfWcqoDn5N/NkUcwWTccnpN18Tfg==}
     engines: {node: '>=14.0.0'}
+    dev: false
+
+  /@stripe/react-stripe-js@2.3.0(@stripe/stripe-js@2.1.5)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-AOxsvRIXfIh0WkebAfITfCQY6NgnEDg3jOH7KfHGQPjPmcxJ+HFj/EZOEuyflDjlB1iTGPDCqK0MqiQ8LjLbag==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.44.1 || ^2.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@stripe/stripe-js': 2.1.5
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@stripe/stripe-js@2.1.5:
+    resolution: {integrity: sha512-vKztTjPYeCcX1Y1Ug2sE5+m/Gdm4CVAKGcQiRjLHQd2hDkjkVKClx3RbCStSi9rLRy50xHCiM+/kj4fbCHHA1Q==}
     dev: false
 
   /@types/prop-types@15.7.5:

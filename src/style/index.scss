@@ -212,11 +212,11 @@ $custom-blue-hover: #19b9e0;
   animation: rotateit 1s linear infinite;
 }
 
-@keyframes rotateit{
-  0%{transform: scale(1);}
-  50%{transform: scale(5);}
-  100%{transform: scale(1);}
-}
+// @keyframes rotateit{
+//   0%{transform: scale(1);}
+//   50%{transform: scale(5);}
+//   100%{transform: scale(1);}
+// }
 
 .description-text-small {
   margin: 0.5em 2%;

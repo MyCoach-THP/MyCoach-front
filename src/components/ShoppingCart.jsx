@@ -3,6 +3,9 @@ import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
 import { cartAtom } from "./cartAtom";
 import { API_BASE_URL } from "../../config";
+import { useStripe } from "@stripe/react-stripe-js";
+
+
 
 const ShoppingCart = () => {
   const [authState, setAuthState] = useAtom(authAtom);
@@ -49,7 +52,7 @@ const ShoppingCart = () => {
     if (user_id != null) {
       const token = localStorage.getItem("token");
   
-      fetch(`${API_BASE_URL}/cart/remove/?product_id=${itemId}`, {
+      fetch(`${API_BASE_URL}/cart/remove/?training_plan_id=${itemId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -76,6 +79,29 @@ const ShoppingCart = () => {
     }
   };
 
+  const stripe = useStripe();
+
+  const handleCheckout = async () => {
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${API_BASE_URL}/create_stripe_session`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { session_id } = await response.json();
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: session_id,
+    });
+
+    if (result.error) {
+      console.error(result.error.message);
+    }
+  };
+
   return (
     <>
       <div className='background-style'>
@@ -87,14 +113,27 @@ const ShoppingCart = () => {
                 <p className='text-xl mb-4 text-center'>
                   Vous avez {myCart.length} article(s) dans votre panier
                 </p>
-                
-                {myCart.map(item=>(
+
+                {myCart.map((item) => (
                   <>
-                  <p className="m-2">{item.name} {item.price}€ <button className="delete-from-cart" onClick={()=>handleDeleteFromCartClick(item.id)}>Supprimer du panier</button></p>
+                    <p className='m-2'>
+                      {item.name} {item.price}€{" "}
+                      <button
+                        className='delete-from-cart'
+                        onClick={() => handleDeleteFromCartClick(item.id)}>
+                        Supprimer du panier
+                      </button>
+                    </p>
                   </>
                 ))}
-                <h1 className='text-2xl mb-4 text-center totalprice'>Total : {totalPrice}€</h1>
-                <button className="buybutton flex justify-center items-center">Passer à la caisse</button>
+                <h1 className='text-2xl mb-4 text-center totalprice'>
+                  Total : {totalPrice}€
+                </h1>
+                <button
+                  className='buybutton flex justify-center items-center'
+                  onClick={handleCheckout}>
+                  Passer à la caisse
+                </button>
               </>
             ) : (
               "Votre panier est vide"
