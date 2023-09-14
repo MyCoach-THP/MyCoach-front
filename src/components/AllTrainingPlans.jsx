@@ -24,8 +24,7 @@ useEffect(() => {
           fetch(`${API_BASE_URL}/coaches/${id}`).then((response) =>
             response.json()
           )
-        )
-      )
+        ))
         .then((coachDataArray) => {
           const plansWithCoachNames = data.map((plan, index) => {
             return {
@@ -82,11 +81,7 @@ useEffect(() => {
           },
         }).then((response) => {
           if (response.ok) {
-            setCart((prevCart) => ({
-              ...prevCart,
-              cartlist: [...prevCart.cartlist, selectedPlan.id],
-            }));
-            localStorage.setItem("cartlist", [...cart.cartlist, selectedPlan.id]);
+            getCart();
           } else {
             throw new Error("Erreur lors de l'ajout au panier");
           }
@@ -96,6 +91,27 @@ useEffect(() => {
         navigate("/signin");
       }
     };
+
+    
+  const getCart = () =>{
+    const token = localStorage.getItem("token");
+  
+    fetch(`${API_BASE_URL}/cart/get`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCart({cartlist: data.cartlist});
+        setCartCount(data.cartlist.length);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching cart data!", error);
+      });
+  }
   
   return (
     <div className='background-style pt-16'>

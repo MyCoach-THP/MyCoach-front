@@ -17,6 +17,31 @@ const ShoppingCart = () => {
   const user_id = authState.user_id;
 
   useEffect(() => {
+    getCart();
+  }, []);
+
+  const getCart = () =>{
+    const token = localStorage.getItem("token");
+  
+    fetch(`${API_BASE_URL}/cart/get`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.cartlist);
+        setCart({cartlist: data.cartlist});
+        setCartCount(data.cartlist.length);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching cart data!", error);
+      });
+  }
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
 
     fetch(`${API_BASE_URL}/training_plans/`, {
@@ -36,7 +61,6 @@ const ShoppingCart = () => {
         );
 
         setMyCart(filteredTrainingPlans);
-        console.log(filteredTrainingPlans);
       })
       .catch((error) => {
         console.error("There was an error fetching training plans!", error);
@@ -61,13 +85,8 @@ const ShoppingCart = () => {
         .then((response) => {
           console.log(response);
           if (response.ok) {
-            setCart((prevCart) => ({
-              ...prevCart,
-              cartlist: prevCart.cartlist.filter((item) => item !== itemId),
-            }));
-  
-            const updatedCartlist = cart.cartlist.filter((item) => item !== itemId);
-            localStorage.setItem("cartlist", updatedCartlist);
+
+            getCart();
           } else {
             throw new Error("Erreur lors de la suppression du panier");
           }

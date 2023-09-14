@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { authAtom } from "./authAtom";
@@ -13,6 +13,11 @@ const SignIn = () => {
   const [authState, setAuthState] = useAtom(authAtom);
   const [cart, setCart] = useAtom(cartAtom);
   let authToken;
+
+  useEffect(()=>{
+    setEmail("manu@test.fr");
+    setPassword("boubou");
+  },[])
 
   const handleSubmit = (e) => {
     e.preventDefault();
