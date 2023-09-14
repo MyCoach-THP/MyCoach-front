@@ -23,6 +23,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import ShoppingCart from "./components/ShoppingCart";
 import Success from "./components/Success";
 import Cancel from "./components/Cancel";
+import { API_BASE_URL } from "../config";
 
 
 const stripePromise = loadStripe(
@@ -42,24 +43,38 @@ function App() {
         isLoggedIn: true,
       });
 
-      if (localStorage.getItem("cartlist")){
-        let items = localStorage.getItem("cartlist").split(',');
-        console.log(items);
-        setCart({cartlist: items})
-      }
-
-      setCartCount(cart.cartlist.length);
+      getCart();
     }
   }, []);
 
+  const getCart = () =>{
+    const token = localStorage.getItem("token");
+  
+    fetch(`${API_BASE_URL}/cart/get`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const items = data.cartlist;
+        setCart({cartlist: items})
+      })
+      .catch((error) => {
+        console.error("There was an error fetching cart data!", error);
+      });
+  }
+
   useEffect(()=>{
     setCartCount(cart.cartlist.length);
-  }, [cart.cartlist.length])
+  },[cart])
 
   return (
     <div className='main-content flex flex-col min-h-screen'>
       <Router>
-        <Navbar cartCount={cart.cartlist.length} />
+        <Navbar cartCount={cartCount} />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/register' element={<Register />} />
