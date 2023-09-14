@@ -20,9 +20,9 @@ const ShoppingCart = () => {
     getCart();
   }, []);
 
-  const getCart = () =>{
+  const getCart = () => {
     const token = localStorage.getItem("token");
-  
+
     fetch(`${API_BASE_URL}/cart/get`, {
       method: "GET",
       headers: {
@@ -33,13 +33,13 @@ const ShoppingCart = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.cartlist);
-        setCart({cartlist: data.cartlist});
+        setCart({ cartlist: data.cartlist });
         setCartCount(data.cartlist.length);
       })
       .catch((error) => {
         console.error("There was an error fetching cart data!", error);
       });
-  }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -87,7 +87,6 @@ const ShoppingCart = () => {
         .then((response) => {
           console.log(response);
           if (response.ok) {
-
             getCart();
           } else {
             throw new Error("Erreur lors de la suppression du panier");
@@ -103,10 +102,9 @@ const ShoppingCart = () => {
 
   const stripe = useStripe();
 
-  const handleCheckout = async () => {
+const handleCheckout = async () => {
+  try {
     const token = localStorage.getItem("token");
-    setPurchasedItems(myCart);
-    console.log("Set Purchased Items: ", myCart);
     const response = await fetch(`${API_BASE_URL}/create_stripe_session`, {
       method: "POST",
       headers: {
@@ -122,12 +120,23 @@ const ShoppingCart = () => {
 
     if (result.error) {
       console.error(result.error.message);
-    } else {
-      setSelectedPlan({
-        id: generateUniqueID(myCart),
-        price: totalPrice,
-      });
+      return; // exit if Stripe checkout fails
     }
+
+    // Pass the cart items to the Success component
+    setSelectedPlan({
+      id: generateUniqueID(myCart),
+      price: totalPrice,
+    });
+    setPurchasedItems(myCart); // Update purchasedItemsAtom with cart items
+  } catch (error) {
+    console.error("An error occurred during checkout: ", error);
+  }
+};
+
+  const clearCart = () => {
+    setCart({ cartlist: [] });
+    // Add logic to clear the cart in the backend if necessary
   };
 
   return (

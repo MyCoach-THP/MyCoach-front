@@ -10,46 +10,44 @@ function Success() {
   const [authState] = useAtom(authAtom);
   const { token } = authState;
   const [selectedPlan] = useAtom(selectedPlanAtom);
-  const [purchasedItems] = useAtom(purchasedItemsAtom);
+  const [purchasedItems, setPurchasedItems] = useAtom(purchasedItemsAtom);
   const { id, price } = selectedPlan;
 
-  useEffect(() => {
-    if (!purchasedItems || purchasedItems.length === 0) {
-      console.log("No purchased items found.");
-      return;
-    }
+  const sendPurchaseToBackend = async () => {
+    console.log("Purchased Items in Success Component: ", purchasedItems);
 
-    const sendPurchaseToBackend = async () => {
-      console.log("Purchased Items in Success Component: ", purchasedItems);
+    try {
+      for (const item of purchasedItems) {
+        const response = await fetch(`${API_BASE_URL}/purchase_histories`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            user_id: authState.user_id,
+            training_plan_id: item.id,
+            price: item.price,
+          }),
+        });
 
-      try {
-        for (const item of purchasedItems) {
-          const response = await fetch(`${API_BASE_URL}/purchase_histories`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              user_id: authState.user_id,
-              training_plan_id: item.id,
-              price: item.price,
-            }),
-          });
-
-          if (response.ok) {
-            console.log("Successfully updated a purchase history.");
-          } else {
-            console.log("Failed to update a purchase history.");
-          }
+        if (response.ok) {
+          console.log("Successfully updated a purchase history.");
+        } else {
+          console.log("Failed to update a purchase history.");
         }
-      } catch (error) {
-        console.log("An error occurred:", error);
       }
-    };
+    } catch (error) {
+      console.log("An error occurred:", error);
+    }
+  };
 
-    sendPurchaseToBackend();
-  }, [token, purchasedItems, authState.user_id]);
+  // Call sendPurchaseToBackend when the component mounts
+  useEffect(() => {
+    if (purchasedItems && purchasedItems.length > 0) {
+      sendPurchaseToBackend();
+    }
+  }, [purchasedItems, token, authState.user_id]);
 
   const goToHome = () => {
     navigate("/");
