@@ -4,6 +4,11 @@ import { authAtom } from "./authAtom";
 import { cartAtom, selectedPlanAtom, purchasedItemsAtom } from "./cartAtom";
 import { API_BASE_URL } from "../../config";
 import { useStripe } from "@stripe/react-stripe-js";
+import { Link } from "react-router-dom";
+
+const generateUniqueID = (myCart) => {
+  return Date.now() + "-" + Math.random().toString(36).substr(2, 9);
+};
 
 const ShoppingCart = () => {
   const [authState, setAuthState] = useAtom(authAtom);
@@ -13,6 +18,8 @@ const ShoppingCart = () => {
   const [cartCount, setCartCount] = useState(0);
   const [myCart, setMyCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const user_id = authState.user_id;
 
@@ -20,26 +27,31 @@ const ShoppingCart = () => {
     getCart();
   }, []);
 
-  const getCart = () => {
+const getCart = async () => {
+  try {
     const token = localStorage.getItem("token");
-
-    fetch(`${API_BASE_URL}/cart/get`, {
+    const response = await fetch(`${API_BASE_URL}/cart/get`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.cartlist);
-        setCart({ cartlist: data.cartlist });
-        setCartCount(data.cartlist.length);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching cart data!", error);
-      });
-  };
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch cart");
+    }
+
+    const data = await response.json();
+    console.log(data.cartlist);
+    setCart({ cartlist: data.cartlist });
+    setCartCount(data.cartlist.length);
+  } catch (error) {
+    console.error("There was an error fetching cart data!", error);
+  }
+};
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -102,42 +114,44 @@ const ShoppingCart = () => {
 
   const stripe = useStripe();
 
-const handleCheckout = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${API_BASE_URL}/create_stripe_session`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const handleCheckout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/create_stripe_session`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    const { session_id } = await response.json();
+      const responseData = await response.json();
 
-    const result = await stripe.redirectToCheckout({
-      sessionId: session_id,
-    });
+      const result = await stripe.redirectToCheckout({
+        sessionId: responseData.session_id,
+      });
 
-    if (result.error) {
-      console.error(result.error.message);
-      return; // exit if Stripe checkout fails
+      if (result.error) {
+        console.error(result.error.message);
+      } else {
+        localStorage.setItem("paymentSuccess", "true");
+      }
+    } catch (error) {
+      console.error("An error occurred during checkout: ", error);
     }
-
-    // Pass the cart items to the Success component
-    setSelectedPlan({
-      id: generateUniqueID(myCart),
-      price: totalPrice,
-    });
-    setPurchasedItems(myCart); // Update purchasedItemsAtom with cart items
-  } catch (error) {
-    console.error("An error occurred during checkout: ", error);
-  }
-};
-
-  const clearCart = () => {
-    setCart({ cartlist: [] });
-    // Add logic to clear the cart in the backend if necessary
   };
+  
+const handleSetJotaiState = () => {
+  setCart({ cartlist: myCart.map((item) => item.id) });
+};
+  
+  const handleCheckoutAndOpenModal = async () => {
+    // Mettre à jour l'état de Jotai
+    handleSetJotaiState();
+
+    // Ouvrir la modal
+    setIsModalOpen(true);
+  };
+
 
   return (
     <>
@@ -152,25 +166,52 @@ const handleCheckout = async () => {
                 </p>
 
                 {myCart.map((item) => (
-                  <>
+                  <div key={item.id}>
+                    {" "}
+                    {/* Make sure you have unique key here */}
                     <p className='m-2'>
-                      {item.name} {item.price}€{" "}
+                      {item.name} {item.price}€
                       <button
                         className='delete-from-cart'
                         onClick={() => handleDeleteFromCartClick(item.id)}>
                         Supprimer du panier
                       </button>
                     </p>
-                  </>
+                  </div>
                 ))}
                 <h1 className='text-2xl mb-4 text-center totalprice'>
                   Total : {totalPrice}€
                 </h1>
                 <button
                   className='buybutton flex justify-center items-center'
-                  onClick={handleCheckout}>
-                  Passer à la caisse
+                  onClick={handleCheckoutAndOpenModal}>
+                  Payer
                 </button>
+                {isModalOpen && (
+                  <div className='modal'>
+                    <div className='modal-content'>
+                      <span
+                        className='close cursor-pointer'
+                        onClick={() => setIsModalOpen(false)}>
+                        &times;
+                      </span>
+                      <p>Êtes-vous sûr de vouloir effectuer cet achat ?</p>
+                      <button
+                        onClick={handleCheckout}
+                        className='bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-700'>
+                        Confirmer mon achat et passer au paiement sécurisé
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* <button onClick={handleSetJotaiState}>
+                  Set Cart to Jotai State
+                </button>
+
+                <Link to='/success'>
+                  <button>Go to Success Page</button>
+                </Link> */}
               </>
             ) : (
               "Votre panier est vide"

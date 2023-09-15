@@ -1,23 +1,59 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { selectedPlanAtom, purchasedItemsAtom } from "./cartAtom";
+import { selectedPlanAtom, purchasedItemsAtom, cartAtom } from "./cartAtom";
 import { authAtom } from "./authAtom";
 import { API_BASE_URL } from "../../config";
 
 function Success() {
   const navigate = useNavigate();
   const [authState] = useAtom(authAtom);
-  const { token } = authState;
+  const [cart, setCart] = useAtom(cartAtom);
   const [selectedPlan] = useAtom(selectedPlanAtom);
   const [purchasedItems, setPurchasedItems] = useAtom(purchasedItemsAtom);
-  const { id, price } = selectedPlan;
+  const token = authState.token;
 
-  const sendPurchaseToBackend = async () => {
-    console.log("Purchased Items in Success Component: ", purchasedItems);
-
+  const checkPaymentStatus = async () => {
     try {
-      for (const item of purchasedItems) {
+      if (!token) {
+        console.log("Token is not available");
+        return;
+      }
+      const response = await fetch(`${API_BASE_URL}/api/payment/status`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const text = await response.text();
+
+      if (!text.startsWith("{")) {
+        // Add this check
+        console.error(`Invalid JSON received: ${text}`);
+        return;
+      }
+
+      const data = JSON.parse(text);
+
+      // ... rest of the code
+    } catch (error) {
+      console.error("Failed to check payment status:", error);
+    }
+  };
+
+  const sendPurchaseToBackend = async (cartList) => {
+    if (!token || !authState.user_id) {
+      console.log("Token or User ID is missing");
+      return;
+    }
+    try {
+      for (const item of cartList) {
+        // Debug: Log data being sent
+        console.log("Data being sent:", {
+          user_id: authState.user_id,
+          training_plan_id: item,
+        });
+
         const response = await fetch(`${API_BASE_URL}/purchase_histories`, {
           method: "POST",
           headers: {
@@ -26,8 +62,7 @@ function Success() {
           },
           body: JSON.stringify({
             user_id: authState.user_id,
-            training_plan_id: item.id,
-            price: item.price,
+            training_plan_id: item,
           }),
         });
 
@@ -35,6 +70,9 @@ function Success() {
           console.log("Successfully updated a purchase history.");
         } else {
           console.log("Failed to update a purchase history.");
+          // Debug: Log the error response
+          const errorData = await response.json();
+          console.log("Error data received:", errorData);
         }
       }
     } catch (error) {
@@ -42,12 +80,24 @@ function Success() {
     }
   };
 
-  // Call sendPurchaseToBackend when the component mounts
+  useEffect(() => {
+    checkPaymentStatus();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (cart && cart.cartlist && cart.cartlist.length > 0) {
+      setPurchasedItems([...cart.cartlist]);
+      // Envoyer les données au backend ici
+      sendPurchaseToBackend(cart.cartlist);
+      setCart({ cartlist: [] });
+    }
+  }, [cart]);
+
   useEffect(() => {
     if (purchasedItems && purchasedItems.length > 0) {
       sendPurchaseToBackend();
     }
-  }, [purchasedItems, token, authState.user_id]);
+  }, [purchasedItems, authState.user_id, authState.token]);
 
   const goToHome = () => {
     navigate("/");
