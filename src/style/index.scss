@@ -244,6 +244,10 @@ $custom-blue-hover: #19b9e0;
   animation: opening 0.8s forwards;
   text-align: center;
   padding: 10px;
+  background-image: url('https://static.vecteezy.com/ti/vecteur-libre/p2/494103-haltere-en-metal-pour-la-construction-musculaire-en-illustrationle-de-gym-vectoriel.jpg');
+  background-size: 50%; /* Réduire la taille de l'image */
+  background-repeat: no-repeat; /* Éviter la répétition de l'image */
+  background-position: center bottom;
 }
 
 .popup-plan-close {

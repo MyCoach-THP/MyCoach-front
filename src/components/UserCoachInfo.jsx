@@ -61,7 +61,7 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
 
   const centerPopupStyle = {
     top: "20%",
-    left: "35%",
+    left: "30%",
     transform: "translate(-50%, -50%)",
   };
 
@@ -85,17 +85,22 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
       <h2 className='table-header text-xl mb-4 text-center'>
         Le(s) programme(s) d'entraînement(s) que je propose:
       </h2>
-      <ul className='list-decimal list-inside'>
+      <ul className='list-decimal list-inside space-y-4'>
         {trainingPlans.map((plan) => (
-          <p>
-            <button
-              key={plan.id}
-              className='item-selection'
-              onClick={() => handleClickPlan(plan)}>
-              {" "}
-              {plan.name}: {plan.price}€{" "}
-            </button>
-          </p>
+          <li key={plan.id} className='flex justify-between items-center'>
+            <div>
+              <button
+                className='item-selection px-2 '
+                onClick={() => handleClickPlan(plan)}>
+                {plan.name}:
+              </button>
+            </div>
+            <div className='flex items-center'>
+              <span className='bg-yellow-200 px-2 py-1 rounded-md text-yellow-800'>
+                {plan.price}€
+              </span>
+            </div>
+          </li>
         ))}
       </ul>
 
@@ -120,16 +125,22 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
             {selectedPlan.price} €
           </p>
           <button
-              key={selectedPlan.id}
-              className={`${cart.cartlist.includes(selectedPlan.id.toString()) ? 'button-add-cart-disabled' : 'button-add-cart'}`}
-              onClick={(event) => {
-                if (!cart.cartlist.includes(selectedPlan.id.toString())) {
-                  handleAddToCartClick(event.currentTarget);
-                }
-              }}
-              disabled={cart.cartlist.includes(selectedPlan.id.toString())} >
-              {!cart.cartlist.includes(selectedPlan.id.toString()) ? "Ajouter au panier" : "Le programme est déjà dans votre panier"}
-            </button>  
+            key={selectedPlan.id}
+            className={`${
+              cart.cartlist.includes(selectedPlan.id.toString())
+                ? "button-add-cart-disabled"
+                : "button-add-cart"
+            }`}
+            onClick={(event) => {
+              if (!cart.cartlist.includes(selectedPlan.id.toString())) {
+                handleAddToCartClick(event.currentTarget);
+              }
+            }}
+            disabled={cart.cartlist.includes(selectedPlan.id.toString())}>
+            {!cart.cartlist.includes(selectedPlan.id.toString())
+              ? "Ajouter au panier"
+              : "Le programme est déjà dans votre panier"}
+          </button>
         </div>
       )}
     </>

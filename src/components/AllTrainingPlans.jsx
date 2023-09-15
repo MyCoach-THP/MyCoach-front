@@ -61,7 +61,7 @@ useEffect(() => {
   
     const centerPopupStyle = {
       top: "20%",
-      left: "35%",
+      left: "30%",
       transform: "translate(-50%, -50%)",
     };
 

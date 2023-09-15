@@ -1,10 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 const Card = ({ title, description, imageUrl, coachId, userType }) => {
   const profileLink =
     userType === "coach" ? `/coachProfile/${coachId}` : `/profile/${coachId}`;
+
+  const truncateDescription = (text, wordLimit) => {
+    const words = text.split(" ");
+    if (words.length > wordLimit) {
+      return words.slice(0, wordLimit).join(" ") + " ...";
+    } else {
+      return text;
+    }
+  };
+
+  const truncatedDescription = truncateDescription(description, 20);
+
   return (
     <Link to={profileLink}>
       <div
@@ -20,7 +31,7 @@ const Card = ({ title, description, imageUrl, coachId, userType }) => {
           />
         </div>
         <h2 className='text-2xl font-semibold'>{title}</h2>
-        <p className='text-gray-700'>{description}</p>
+        <p className='text-gray-700'>{truncatedDescription}</p>
       </div>
     </Link>
   );

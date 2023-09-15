@@ -21,12 +21,14 @@ const Home = () => {
   return (
     <div className='flex flex-col'>
       <div
-        className='bg-cover bg-center h-[80vh] flex items-center justify-center shadow-xl mb-20'
+        className={`bg-cover bg-center ${
+          isLoggedIn ? "h-[40vh]" : "h-[80vh]"
+        } flex items-center justify-center shadow-xl mb-20`}
         style={{
           backgroundImage:
             'url("https://www.pixelstalk.net/wp-content/uploads/2016/06/Free-HD-Fitness-Wallpapers-For-Desktop.jpg")',
         }}>
-        <div className='text-center text-white bg-black bg-opacity-50 p-4 rounded'>
+        <div className='text-center text-white bg-black bg-opacity-50 p-4 rounded w-full h-auto'>
           {!isLoggedIn ? (
             <>
               <div className='text-4xl font-bold my-coach-div'>
@@ -37,7 +39,7 @@ const Home = () => {
               <p className='mt-2 text-lg'>Découvrez tous nos services</p>
               <Link
                 to='/register'
-                className='mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded'>
+                className='mt-4 inline-block bg-blue-500 text-white py-2 px-16 rounded'>
                 S'inscrire
               </Link>
             </>
@@ -45,7 +47,7 @@ const Home = () => {
             <Link
               to='/alltrainingplans' // change this to the actual route
               className='text-4xl font-bold text-white'>
-              Découvrez tous les plans
+              Cliquez ici pour découvrir tous les plans d'entrainement proposés par nos coachs
             </Link>
           )}
         </div>
