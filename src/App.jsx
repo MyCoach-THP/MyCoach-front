@@ -23,6 +23,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import ShoppingCart from "./components/ShoppingCart";
 import Success from "./components/Success";
 import Cancel from "./components/Cancel";
+// import StripeSuccessGuard from "./components/StripeSuccessGuard";
 import { API_BASE_URL } from "../config";
 
 
@@ -102,6 +103,14 @@ function App() {
           />{" "}
           <Route path='/ForgotPassword' element={<ForgotPassword />} />
           <Route path='/ResetPassword/:token' element={<ResetPassword />} />
+          {/* <Route
+            path='/success'
+            element={
+              <StripeSuccessGuard>
+                <Success />
+              </StripeSuccessGuard>
+            }
+          />{" "} */}
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
         </Routes>
