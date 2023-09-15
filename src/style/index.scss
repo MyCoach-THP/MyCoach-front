@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "./trainingplan.scss";
+
 @font-face {
   font-family: "Bahnschrift";
   src: url("@/assets/fonts/BAHNSCHRIFT.TTF") format("truetype");
@@ -212,7 +213,7 @@ $custom-blue-hover: #19b9e0;
   animation: rotateit 1s linear infinite;
 }
 
-.disabled{
+.disabled {
   background-color: grey !important;
 }
 
@@ -230,7 +231,7 @@ $custom-blue-hover: #19b9e0;
   margin: 1em 2% 2em 2%;
 }
 
-.popup-plan{
+.popup-plan {
   position: fixed;
   margin: 0 auto;
   top: 20%;
@@ -245,7 +246,7 @@ $custom-blue-hover: #19b9e0;
   padding: 10px;
 }
 
-.popup-plan-close{
+.popup-plan-close {
   width: 30px;
   height: 30px;
   padding: 3px;
@@ -261,27 +262,34 @@ $custom-blue-hover: #19b9e0;
   line-height: 20px;
 }
 
-.popup-plan-close:hover{
+.popup-plan-close:hover {
   background-color: rgb(255, 38, 0);
 }
 
 @keyframes opening {
-  0%{transform: scale(0); border-radius: 50%;}
-  100%{transform: scale(1); border-radius: 5px;}
+  0% {
+    transform: scale(0);
+    border-radius: 50%;
+  }
+
+  100% {
+    transform: scale(1);
+    border-radius: 5px;
+  }
 }
 
-.button-add-cart{
+.button-add-cart {
   background-color: orange;
   color: white;
   padding: 5px;
   border-radius: 5px;
 }
 
-.button-add-cart:hover{
+.button-add-cart:hover {
   background-color: rgb(253, 180, 43);
 }
 
-.button-add-cart-disabled{
+.button-add-cart-disabled {
   background-color: rgb(167, 167, 167);
   color: white;
   padding: 5px;
@@ -299,12 +307,12 @@ $custom-blue-hover: #19b9e0;
   border-radius: 50%;
 }
 
-.item-selection:hover{
+.item-selection:hover {
   color: rgb(255, 153, 0);
   transform: scale(1.1);
 }
 
-.delete-from-cart{
+.delete-from-cart {
   background-color: rgb(253, 63, 63);
   padding: 2px;
   border-radius: 5px;
@@ -313,18 +321,18 @@ $custom-blue-hover: #19b9e0;
   margin-left: 50px;
 }
 
-.delete-from-cart:hover{
+.delete-from-cart:hover {
   background-color: rgb(255, 0, 0);
 }
 
-.totalprice{
+.totalprice {
   background-color: rgb(207, 207, 207);
   margin-top: 20px;
   border-radius: 5px;
   padding: 5px;
 }
 
-.buybutton{
+.buybutton {
   background-color: orange;
   color: white;
   border-radius: 5px;
@@ -332,6 +340,11 @@ $custom-blue-hover: #19b9e0;
   margin: 0 auto;
 }
 
-.buybutton:hover{
+.buybutton:hover {
   background-color: rgb(255, 123, 0);
+}
+
+.planmodal:hover {
+  cursor: pointer;
+  color: $custom-blue-hover;
 }
