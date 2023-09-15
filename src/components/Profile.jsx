@@ -38,7 +38,12 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    const userId = id || user_id;
+    let userId = null
+    if (id === undefined) {
+      userId = user_id
+    } else {
+      userId = id
+    }
     setDisplayedUserId(userId);
     fetch(`${API_BASE_URL}/coaches/${userId}`)
       .then((response) => response.json())
@@ -57,7 +62,12 @@ const Profile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const coachId = id;
+    let coachId = null
+    if (id === undefined) {
+      coachId = user_id
+    } else {
+      coachId = id
+    }
 
     fetch(`${API_BASE_URL}/training_plans_by_coach/${coachId}`, {
       method: "GET",
@@ -95,15 +105,6 @@ const Profile = () => {
     setIsEditing(false);
   };
 
-  const handleClickPlan = (plan) => {
-    setSelectedPlan(plan);
-    setShowPlan(true);
-  };
-
-  const handleClosePlan = () => {
-    setShowPlan(false);
-  };
-
   const handleAddToCartClick = () => {
     if (user_id != null) {
       const token = localStorage.getItem("token");
@@ -129,7 +130,7 @@ const Profile = () => {
     }
   };
 
-  
+
 
   return (
     <div className='background-style2'>

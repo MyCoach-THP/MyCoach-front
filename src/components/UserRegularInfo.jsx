@@ -8,6 +8,8 @@ const UserRegularInfo = ({ profileData }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [purchaseHistory, setPurchaseHistory] = useState([]);
+  const [showPlan, setShowPlan] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(false);
 
   const fetchPurchaseHistory = async () => {
     try {
@@ -20,8 +22,8 @@ const UserRegularInfo = ({ profileData }) => {
       const response = await fetch(`${API_BASE_URL}/purchase_histories`, {
         headers: token
           ? {
-              Authorization: `Bearer ${token}`,
-            }
+            Authorization: `Bearer ${token}`,
+          }
           : {},
       });
 
@@ -43,6 +45,22 @@ const UserRegularInfo = ({ profileData }) => {
     fetchPurchaseHistory();
   }, []);
 
+  const handleClickPlan = (plan) => {
+    console.log(plan)
+    setSelectedPlan(plan);
+    setShowPlan(true);
+  };
+
+  const handleClosePlan = () => {
+    setShowPlan(false);
+  };
+
+  const centerPopupStyle = {
+    top: "20%",
+    left: "35%",
+    transform: "translate(-50%, -50%)",
+  };
+
   return (
     <>
       <img
@@ -63,13 +81,35 @@ const UserRegularInfo = ({ profileData }) => {
         <strong>Historique des achats :</strong>
         <ul>
           {purchaseHistory.map((history, index) => (
-            <li key={index}>
-              ID du plan d'entraînement: {history.training_plan_id}, Prix:{" "}
-              {history.price}, Statut: {history.status}
+            <li className="planmodal" key={index} onClick={() => handleClickPlan(history)}>
+              Plan d'entraînement: {history.training_plan.name}
             </li>
           ))}
         </ul>
       </div>
+
+      {showPlan && (
+        <div
+          className='popup-plan bg-white rounded p-4 mx-auto w-1/2'
+          style={centerPopupStyle}>
+          {" "}
+          <span className='popup-plan-close' onClick={handleClosePlan}>
+            X
+          </span>
+          <p className='mt-5 mb-2'>
+            <strong>Nom du programme : </strong>
+            {selectedPlan.training_plan.name}
+          </p>
+          <p className='mb-2'>
+            <strong>Description : </strong>
+            {selectedPlan.training_plan.description}
+          </p>
+          <p className='mb-2'>
+            <strong>Exercices : </strong>
+            {selectedPlan.training_plan.exercices}
+          </p>
+        </div>
+      )}
     </>
   );
 };

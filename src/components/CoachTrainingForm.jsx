@@ -10,6 +10,7 @@ const CoachTrainingForm = ({ onNewPlan }) => {
     name: "",
     description: "",
     price: 0,
+    exercices: ""
   });
 
   useEffect(() => {
@@ -28,11 +29,13 @@ const CoachTrainingForm = ({ onNewPlan }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (formData.name.length < 5){
+    if (formData.name.length < 5) {
       setErrorMessage("Le nom de votre programme doit avoir au moins 5 caractères.");
-    } else if (formData.description.length < 10){
+    } else if (formData.description.length < 10) {
       setErrorMessage("La description de votre programme doit avoir au moins 10 caractères.");
-    } else if (formData.price === 0){
+    } else if (formData.exercices.length < 10) {
+      setErrorMessage("La routine d'entrainement de votre programme doit avoir au moins 10 caractères.");
+    } else if (formData.price === 0) {
       setErrorMessage("Vous devez spécifier un prix minimum.");
     } else {
       setSuccessMessage("");
@@ -66,15 +69,15 @@ const CoachTrainingForm = ({ onNewPlan }) => {
   return (
     <form onSubmit={handleSubmit} className='space-y-4'>
 
-      {errorMessage.length>0 && (
+      {errorMessage.length > 0 && (
         <div role="Erreur">
-        <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-          Danger
+          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+            Danger
+          </div>
+          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+            <p>{errorMessage}</p>
+          </div>
         </div>
-        <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-          <p>{errorMessage}</p>
-        </div>
-      </div>
       )}
 
       <div className='flex flex-col'>
@@ -102,7 +105,21 @@ const CoachTrainingForm = ({ onNewPlan }) => {
           onChange={handleChange}
           className='formwidget'
           placeholder='Insérez la description ici'
-          rows='4' style={{resize:"none"}}></textarea>
+          rows='4' style={{ resize: "none" }}></textarea>
+      </div>
+
+      <div className='flex flex-col'>
+        <label htmlFor='exercices' className='text-lg mb-2'>
+          Routine d'entrainement
+        </label>
+        <textarea
+          id='exercices'
+          name='exercices'
+          value={formData.exercices}
+          onChange={handleChange}
+          className='formwidget'
+          placeholder="Insérez la routine d'entrainement ici"
+          rows='4' style={{ resize: "none" }}></textarea>
       </div>
 
       <div className='flex flex-col'>
