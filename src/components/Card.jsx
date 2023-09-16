@@ -6,11 +6,13 @@ const Card = ({ title, description, imageUrl, coachId, userType }) => {
     userType === "coach" ? `/coachProfile/${coachId}` : `/profile/${coachId}`;
 
   const truncateDescription = (text, wordLimit) => {
-    const words = text.split(" ");
-    if (words.length > wordLimit) {
-      return words.slice(0, wordLimit).join(" ") + " ...";
-    } else {
-      return text;
+    if (text!=null){
+      const words = text.split(" ");
+      if (words.length > wordLimit) {
+        return words.slice(0, wordLimit).join(" ") + " ...";
+      } else {
+        return text;
+      }
     }
   };
 
