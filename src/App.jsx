@@ -78,7 +78,6 @@ function App() {
         <Navbar cartCount={cartCount} />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='*' element={<NotFoundPage />} />
           <Route path='/register' element={<Register />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/confidentiality' element={<Confidentiality />} />
@@ -104,16 +103,9 @@ function App() {
           />{" "}
           <Route path='/ForgotPassword' element={<ForgotPassword />} />
           <Route path='/ResetPassword/:token' element={<ResetPassword />} />
-          {/* <Route
-            path='/success'
-            element={
-              <StripeSuccessGuard>
-                <Success />
-              </StripeSuccessGuard>
-            }
-          />{" "} */}
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
+          <Route path='*' element={<NotFoundPage />} />
         </Routes>
         <Footer />
       </Router>
