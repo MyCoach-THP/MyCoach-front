@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "name": "MyCoach",
+  "builds": [{ "src": "package.json", "use": "@vercel/node" }],
+  "env": {
+    "API_BASE_URL": "https://mycoach.fly.dev"
+  },
+  "routes": [{ "src": "/(.*)", "dest": "/" }]
+}

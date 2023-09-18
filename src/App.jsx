@@ -23,7 +23,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import ShoppingCart from "./components/ShoppingCart";
 import Success from "./components/Success";
 import Cancel from "./components/Cancel";
-// import StripeSuccessGuard from "./components/StripeSuccessGuard";
+import NotFoundPage from "./components/NotFoundPage";
 import { API_BASE_URL } from "../config";
 
 
@@ -78,6 +78,7 @@ function App() {
         <Navbar cartCount={cartCount} />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='*' element={<NotFoundPage />} />
           <Route path='/register' element={<Register />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/confidentiality' element={<Confidentiality />} />
