@@ -5,5 +5,5 @@
   "env": {
     "API_BASE_URL": "https://mycoach.fly.dev"
   },
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
