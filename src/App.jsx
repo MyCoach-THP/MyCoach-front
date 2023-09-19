@@ -26,7 +26,6 @@ import Cancel from "./components/Cancel";
 import NotFoundPage from "./components/NotFoundPage";
 import { API_BASE_URL } from "../config";
 
-
 const stripePromise = loadStripe(
   "pk_test_51N8h8sAhrOPnCIzT2ugqqe9aJvcLkKKKpomNhFpG9DecpeMucOPevdw1Pcxv3nWcp5MccbwzjP6ttuzAdXklMgOX00vBWvPGrf"
 );
@@ -48,9 +47,9 @@ function App() {
     }
   }, []);
 
-  const getCart = () =>{
+  const getCart = () => {
     const token = localStorage.getItem("token");
-  
+
     fetch(`${API_BASE_URL}/cart/get`, {
       method: "GET",
       headers: {
@@ -60,17 +59,17 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        const items = data.cartlist;
-        setCart({cartlist: items})
+        const items = data.cartlist || [];
+        setCart({ cartlist: items });
       })
       .catch((error) => {
         console.error("There was an error fetching cart data!", error);
       });
-  }
+  };
 
-  useEffect(()=>{
-    setCartCount(cart.cartlist.length);
-  },[cart])
+  useEffect(() => {
+    setCartCount(cart?.cartlist?.length || 0);
+  }, [cart]);
 
   return (
     <div className='main-content flex flex-col min-h-screen'>
