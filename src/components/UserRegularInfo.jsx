@@ -27,12 +27,15 @@ const UserRegularInfo = ({ profileData }) => {
           : {},
       });
 
-      if (response.ok) {
-        const data = await response.json();
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data)) {
         setPurchaseHistory(data);
       } else {
-        throw new Error(`Failed to fetch data: ${response.status}`);
+        setPurchaseHistory([]); // Set to empty array if data is not an array
       }
+    }
+
     } catch (error) {
       console.error(`An error occurred while fetching data: ${error}`);
       setError(error);
