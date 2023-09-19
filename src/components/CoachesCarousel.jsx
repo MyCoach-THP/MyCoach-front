@@ -59,6 +59,7 @@ const CoachesCarousel = () => {
       onClick={() => carouselRef.current.slidePrev()}
       disabled={isDisabled}
       className="custom-prev-button mr-3 carousel-btn"
+      aria-label="Slide précédente"
     >
       <FontAwesomeIcon icon={faArrowLeft} />
     </button>
@@ -69,6 +70,7 @@ const CoachesCarousel = () => {
       onClick={() => carouselRef.current.slideNext()}
       disabled={isDisabled}
       className="custom-next-button ml-3 carousel-btn"
+      aria-label="Slide suivante"
     >
       <FontAwesomeIcon icon={faArrowRight} />
     </button>
