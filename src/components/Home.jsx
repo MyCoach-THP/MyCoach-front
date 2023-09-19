@@ -18,6 +18,7 @@ const Home = () => {
       );
   }, []);
 
+
   return (
     <div className='flex flex-col'>
       <div
@@ -31,23 +32,25 @@ const Home = () => {
         <div className='text-center text-white bg-black bg-opacity-50 p-4 rounded w-full h-auto'>
           {!isLoggedIn ? (
             <>
-              <div className='text-4xl font-bold my-coach-div'>
+              <div className='text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold my-coach-div'>
                 <span className='blue'>My</span>
                 <span className='white'>Coach</span>
               </div>
-
-              <p className='mt-2 text-lg'>Découvrez tous nos services</p>
+              <p className='mt-2 text-sm md:text-md lg:text-lg xl:text-lg'>
+                Découvrez tous nos services
+              </p>
               <Link
                 to='/register'
-                className='mt-4 inline-block bg-blue-500 text-white py-2 px-16 rounded'>
+                className='mt-4 inline-block bg-blue-500 text-white py-2 px-8 md:py-2 md:px-16 rounded'>
                 S'inscrire
               </Link>
             </>
           ) : (
             <Link
               to='/alltrainingplans' // change this to the actual route
-              className='text-4xl font-bold text-white'>
-              Cliquez ici pour découvrir tous les plans d'entrainement proposés par nos coachs
+              className='text-lg md:text-xl lg:text-2xl xl:text-4xl font-bold text-white'>
+              Cliquez ici pour découvrir tous les plans d'entrainement proposés
+              par nos coachs
             </Link>
           )}
         </div>

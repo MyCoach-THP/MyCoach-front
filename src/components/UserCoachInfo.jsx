@@ -13,6 +13,8 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
   const user_id = authState.user_id;
   const [cart, setCart] = useAtom(cartAtom);
   const navigate = useNavigate();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
   const handleClickPlan = (plan) => {
     setSelectedPlan(plan);
@@ -60,9 +62,8 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
   ,[cart])
 
   const centerPopupStyle = {
-    top: "20%",
-    left: "30%",
     transform: "translate(-50%, -50%)",
+    maxWidth: windowWidth <= 768 ? "90%" : "initial",
   };
 
   return (
@@ -70,9 +71,8 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
       <img
         src={profileData.image_url}
         alt='User Profile Picture'
-        className='profile-picture'
+        className='profile-picture w-full sm:w-auto'
       />
-
       <div className='mb-4'>
         <strong>Nom :</strong> {profileData.lastname}
       </div>
@@ -82,12 +82,14 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
       <div className='mb-4'>
         <strong>Description :</strong> {profileData.description}
       </div>
-      <h2 className='table-header text-xl mb-4 text-center'>
+      <h2 className='table-header text-lg sm:text-xl mb-4 text-center'>
         Le(s) programme(s) d'entraînement(s) que je propose:
       </h2>
-      <ul className='list-decimal list-inside space-y-4'>
+      <ul className='list-decimal list-inside space-y-2 sm:space-y-4'>
         {trainingPlans.map((plan) => (
-          <li key={plan.id} className='flex justify-between items-center'>
+          <li
+            key={plan.id}
+            className='flex flex-col sm:flex-row justify-between items-center'>
             <div>
               <button
                 className='item-selection px-2 '
@@ -95,7 +97,7 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
                 {plan.name}:
               </button>
             </div>
-            <div className='flex items-center'>
+            <div className='flex items-center mt-2 sm:mt-0'>
               <span className='bg-yellow-200 px-2 py-1 rounded-md text-yellow-800'>
                 {plan.price}€
               </span>
@@ -103,12 +105,10 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
           </li>
         ))}
       </ul>
-
       {showPlan && (
         <div
-          className='popup-plan bg-white rounded p-4 mx-auto w-1/2'
+          className='popup-plan bg-white rounded p-4 mx-4 sm:mx-auto w-full sm:w-1/2 '
           style={centerPopupStyle}>
-          {" "}
           <span className='popup-plan-close' onClick={handleClosePlan}>
             X
           </span>
@@ -125,11 +125,10 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
             {selectedPlan.price} €
           </p>
           <button
-            key={selectedPlan.id}
-            className={`${
+            className={`buybutton ${
               cart.cartlist.includes(selectedPlan.id.toString())
-                ? "button-add-cart-disabled"
-                : "button-add-cart"
+                ? "button-add-cart-disabled md:py-4 md:px-8 py-2 px-4"
+                : "button-add-cart md:py-4 md:px-8 py-2 px-4"
             }`}
             onClick={(event) => {
               if (!cart.cartlist.includes(selectedPlan.id.toString())) {
@@ -145,6 +144,7 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
       )}
     </>
   );
+
 };
 
 export default UserCoachInfo;

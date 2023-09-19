@@ -55,7 +55,7 @@ const Navbar = (props) => {
       ) : (
         <>
           <li>
-            <Link to='/register' className='nav-link' onClick={() => setIsOpen(false)}>
+            <Link to='/register' className='nav-link px-4' onClick={() => setIsOpen(false)}>
               S'enregistrer
             </Link>
           </li>

@@ -15,6 +15,8 @@ const AllTrainingPlans = () => {
   const [cart, setCart] = useAtom(cartAtom);
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
 
   useEffect(() => {
@@ -62,12 +64,6 @@ const AllTrainingPlans = () => {
 
   const handleClosePlan = () => {
     setShowPlan(false);
-  };
-
-  const centerPopupStyle = {
-    top: "20%",
-    left: "30%",
-    transform: "translate(-50%, -50%)",
   };
 
 const handleAddToCartClick = (event) => {
@@ -128,87 +124,89 @@ const handleAddToCartClick = (event) => {
       });
   };
 
-  return (
-    <div className='background-style pt-16'>
-      {" "}
-      <div className='all-training-plans mx-auto w-1/2'>
-        {" "}
-        <h2 className='text-2xl mt-8 mb-4 text-center text-white'>
-          Tous les plans d'entraînement
-        </h2>
-        {allPlans.length === 0 ? (
-          <p className='text-center'>Chargement...</p>
-        ) : (
-          <table className='min-w-full bg-white mx-auto'>
-            {" "}
-            <thead>
-              <tr>
-                <th className='w-2/5 py-2'>Titre</th>
-                <th className='w-3/10 py-2'>Nom du Coach</th>
-                <th className='w-1/20 py-2'>Prix</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allPlans.map((plan) => (
-                <tr
-                  key={plan.id}
-                  className='text-center border-b border-gray-200'>
-                  <td>
-                    <button
-                      onClick={() => handleClickPlan(plan)}
-                      className='item-selection'>
-                      {plan.name}
-                    </button>
-                  </td>
-                  <td>{plan.firstname}</td>
-                  <td>{plan.price}€</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-        {showPlan && (
-          <div
-            className='popup-plan bg-white rounded p-4 mx-auto w-1/2'
-            style={centerPopupStyle}>
-            {" "}
-            <span className='popup-plan-close' onClick={handleClosePlan}>
-              X
-            </span>
-            <p className='mt-5 mb-2'>
-              <strong>Nom du programme : </strong>
-              {selectedPlan.name}
-            </p>
-            <p className='mb-2'>
-              <strong>Description : </strong>
-              {selectedPlan.description}
-            </p>
-            <p className='mb-2'>
-              <strong>Prix : </strong>
-              {selectedPlan.price} €
-            </p>
-            <button
-              key={selectedPlan.id}
-              className={`${
-                cart.cartlist?.includes(selectedPlan.id.toString())
-                  ? "button-add-cart-disabled"
-                  : "button-add-cart"
-              }`}
-              onClick={(event) => {
-                if (!cart.cartlist.includes(selectedPlan.id.toString())) {
-                  handleAddToCartClick(event.currentTarget);
-                }
-              }}
-              disabled={cart.cartlist.includes(selectedPlan.id.toString())}>
-              {!cart.cartlist.includes(selectedPlan.id.toString())
-                ? "Ajouter au panier"
-                : "Le programme est déjà dans votre panier"}
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  const centerPopupStyle = {
+    transform: "translate(-50%, -50%)",
+    maxWidth: windowWidth <= 768 ? "90%" : "initial",
+  };
+
+ return (
+   <div className='background-style pt-16 px-2 md:px-4 lg:px-8 xl:px-16'>
+     <div className='all-training-plans mx-auto w-full md:w-3/4 lg:w-2/3 xl:w-1/2'>
+       <h2 className='text-2xl mt-8 mb-4 text-center text-white'>
+         Tous les plans d'entraînement
+       </h2>
+       {allPlans.length === 0 ? (
+         <p className='text-center'>Chargement...</p>
+       ) : (
+         <table className='min-w-full bg-white mx-auto table-auto'>
+           <thead>
+             <tr>
+               <th className='w-2/5 py-2'>Titre</th>
+               <th className='w-3/10 py-2'>Nom du Coach</th>
+               <th className='w-1/20 py-2'>Prix</th>
+             </tr>
+           </thead>
+           <tbody>
+             {allPlans.map((plan) => (
+               <tr
+                 key={plan.id}
+                 className='text-center border-b border-gray-200'>
+                 <td>
+                   <button
+                     onClick={() => handleClickPlan(plan)}
+                     className='item-selection'>
+                     {plan.name}
+                   </button>
+                 </td>
+                 <td>{plan.firstname}</td>
+                 <td>{plan.price}€</td>
+               </tr>
+             ))}
+           </tbody>
+         </table>
+       )}
+       {showPlan && (
+         <div
+           className='popup-plan bg-white rounded p-4 mx-4 sm:mx-auto w-full sm:w-1/2 alltr-popup-class'
+           style={centerPopupStyle}>
+           {" "}
+           <span className='popup-plan-close' onClick={handleClosePlan}>
+             X
+           </span>
+           <p className='mt-5 mb-2'>
+             <strong>Nom du programme : </strong>
+             {selectedPlan.name}
+           </p>
+           <p className='mb-2'>
+             <strong>Description : </strong>
+             {selectedPlan.description}
+           </p>
+           <p className='mb-2'>
+             <strong>Prix : </strong>
+             {selectedPlan.price} €
+           </p>
+           <button
+             key={selectedPlan.id}
+             className={`${
+               cart.cartlist?.includes(selectedPlan.id.toString())
+                 ? "button-add-cart-disabled"
+                 : "button-add-cart"
+             }`}
+             onClick={(event) => {
+               if (!cart.cartlist.includes(selectedPlan.id.toString())) {
+                 handleAddToCartClick(event.currentTarget);
+               }
+             }}
+             disabled={cart.cartlist.includes(selectedPlan.id.toString())}>
+             {!cart.cartlist.includes(selectedPlan.id.toString())
+               ? "Ajouter au panier"
+               : "Le programme est déjà dans votre panier"}
+           </button>
+         </div>
+       )}
+     </div>
+   </div>
+ );
 };
 
 export default AllTrainingPlans;

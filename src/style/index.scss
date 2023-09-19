@@ -217,12 +217,6 @@ $custom-blue-hover: #19b9e0;
   background-color: grey !important;
 }
 
-// @keyframes rotateit{
-//   0%{transform: scale(1);}
-//   50%{transform: scale(5);}
-//   100%{transform: scale(1);}
-// }
-
 .description-text-small {
   margin: 0.5em 2%;
 }
@@ -248,6 +242,18 @@ $custom-blue-hover: #19b9e0;
   background-size: 50%; /* Réduire la taille de l'image */
   background-repeat: no-repeat; /* Éviter la répétition de l'image */
   background-position: center bottom;
+}
+
+.alltr-popup-class {
+  position: fixed;
+  top: 15%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  width: auto;
+  max-height: 90vh; 
+  overflow-y: auto; 
+  z-index: 999;
 }
 
 .popup-plan-close {
@@ -351,4 +357,43 @@ $custom-blue-hover: #19b9e0;
 .planmodal:hover {
   cursor: pointer;
   color: $custom-blue-hover;
+}
+
+// ## responsivité
+
+@media (max-width: 768px) {
+  .popup-plan {
+    width: 90%;
+    height: auto;
+    background-image: none;
+  }
+    .alltr-popup-class {
+    width: 90%;
+    height: auto;
+    top: 15%;
+    left: 5%;
+    background-image: none;
+  }
+
+  .coachform {
+    width: 100%;
+  }
+
+  .formwidget {
+    width: 90%;
+  }
+
+  .buybutton {
+    padding: 8px 16px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+    .alltr-popup-class {
+    width: 90%;
+    height: auto;
+    top: 15%;
+    left: 25%;
+    background-image: none;
+  }
 }

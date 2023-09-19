@@ -15,8 +15,8 @@ const SignIn = () => {
   let authToken;
 
   useEffect(()=>{
-    setEmail("manu@test.fr");
-    setPassword("boubou");
+    setEmail("user@test.fr");
+    setPassword("aaaaaa");
   },[])
 
   const handleSubmit = (e) => {
