@@ -24,6 +24,7 @@ import ShoppingCart from "./components/ShoppingCart";
 import Success from "./components/Success";
 import Cancel from "./components/Cancel";
 import NotFoundPage from "./components/NotFoundPage";
+import SeedPage from "./components/SeedPage";
 import { API_BASE_URL } from "../config";
 
 const stripePromise = loadStripe(
@@ -104,6 +105,7 @@ function App() {
           <Route path='/ResetPassword/:token' element={<ResetPassword />} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
+          <Route path='/SeedPage' element={<SeedPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Routes>
         <Footer />
