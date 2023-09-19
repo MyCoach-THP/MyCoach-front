@@ -20,6 +20,8 @@ const Description = () => {
         src="https://res.cloudinary.com/do3pr1kdp/image/upload/v1694527566/Mycoach/onhbpybwcs5tv7l0shaj.png"
         alt="Coach"
         className="description-image"
+        width="1000"
+        height="500"
       />
 
       <p className="description-text">
