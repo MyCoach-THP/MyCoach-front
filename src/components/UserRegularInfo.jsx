@@ -10,6 +10,8 @@ const UserRegularInfo = ({ profileData }) => {
   const [purchaseHistory, setPurchaseHistory] = useState([]);
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 
   const fetchPurchaseHistory = async () => {
     try {
@@ -59,9 +61,8 @@ const UserRegularInfo = ({ profileData }) => {
   };
 
   const centerPopupStyle = {
-    top: "20%",
-    left: "30%",
     transform: "translate(-50%, -50%)",
+    maxWidth: windowWidth <= 768 ? "90%" : "initial",
   };
 
   return (
@@ -84,7 +85,10 @@ const UserRegularInfo = ({ profileData }) => {
         <strong>Historique des achats :</strong>
         <ul>
           {purchaseHistory.map((history, index) => (
-            <li className="planmodal" key={index} onClick={() => handleClickPlan(history)}>
+            <li
+              className='planmodal'
+              key={index}
+              onClick={() => handleClickPlan(history)}>
               Plan d'entraînement: {history.training_plan.name}
             </li>
           ))}
@@ -103,7 +107,7 @@ const UserRegularInfo = ({ profileData }) => {
             <strong>Nom du programme : </strong>
             {selectedPlan.training_plan.name}
           </p>
-          <p className='mb-2'>
+          <p className='mb-2 break-words'>
             <strong>Description : </strong>
             {selectedPlan.training_plan.description}
           </p>
