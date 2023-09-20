@@ -85,7 +85,7 @@ const Navbar = (props) => {
   );
 
   return (
-    <nav className='bg-black bg-opacity-50 p-4 fixed w-full z-10 shadow-md'>
+    <nav className='bg-black bg-opacity-50 p-4 fixed w-full z-20 shadow-md'>
       <div className='flex justify-between items-center'>
         <Link to='/' className='flex items-center'>
           <img src={logoSvg} alt='Logo' className='w-20 h-20 -mt-6 -mb-6' />
