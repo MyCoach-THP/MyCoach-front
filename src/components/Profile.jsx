@@ -135,7 +135,7 @@ const Profile = () => {
   return (
     <div className='background-style2'>
       <div className='coachform'>
-        <h1 className='text-2xl mb-4 text-center'>Mon Profil</h1>
+        <h1 className='text-2xl mb-4 text-center'>Profil</h1>
         {flashMessage && <div className='flash-message'>{flashMessage}</div>}
 
         {user_id === displayedUserId && (

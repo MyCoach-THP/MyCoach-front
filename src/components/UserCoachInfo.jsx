@@ -73,9 +73,12 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
         alt='User Profile Picture'
         className='profile-picture w-full sm:w-auto'
       />
-      <div className='mb-4'>
-        <strong>Nom :</strong> {profileData.lastname}
-      </div>
+      {profileData.name && (
+        <div className='mb-4'>
+          <strong>Nom : </strong>
+          {profileData.name}
+        </div>
+      )}
       <div className='mb-4'>
         <strong>Prénom :</strong> {profileData.firstname}
       </div>
