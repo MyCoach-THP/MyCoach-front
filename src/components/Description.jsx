@@ -7,7 +7,7 @@ const Description = () => {
     return (
       <div className='description-container'>
         <p className='description-text'>
-          Vous prêt à transformer votre vie sportive et à atteindre vos
+          Vous êtes prêt à transformer votre vie sportive et à atteindre vos
           objectifs de forme physique!
         </p>
 
