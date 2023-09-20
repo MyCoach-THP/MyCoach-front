@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CoachTrainingForm from "./CoachTrainingForm";
+import CoachTrainingForm from "../components/CoachTrainingForm";
 // import TrainingPlanView from "./TrainingPlanView";
 import { API_BASE_URL } from "../../config";
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "@/components/Card";
 import { API_BASE_URL } from "../../config";
-import CoachesCarousel from "./CoachesCarousel";
-import Description from "./Description";
+import CoachesCarousel from "../components/CoachesCarousel";
+import Description from "../components/Description";
 
 const Home = () => {
   const [coaches, setCoaches] = useState([]);

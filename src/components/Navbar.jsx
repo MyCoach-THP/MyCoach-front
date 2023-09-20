@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoSvg from "../assets/logo.svg";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
+import { authAtom } from "../atoms/authAtom";
 import { API_BASE_URL } from "../../config";
 
 const Navbar = (props) => {
@@ -29,19 +29,28 @@ const Navbar = (props) => {
       {isLoggedIn ? (
         <>
           <li className='px-4'>
-            <Link to='/profile' className='nav-link' onClick={() => setIsOpen(false)}>
+            <Link
+              to='/profile'
+              className='nav-link'
+              onClick={() => setIsOpen(false)}>
               Mon profil
             </Link>
           </li>
           {isCoach === "true" ? (
             <li>
-              <Link to='/dashboard' className='nav-link' onClick={() => setIsOpen(false)}>
+              <Link
+                to='/dashboard'
+                className='nav-link'
+                onClick={() => setIsOpen(false)}>
                 Tableau de bord
               </Link>
             </li>
           ) : (
             <li>
-              <Link to='/shoppingcart' className='nav-link' onClick={() => setIsOpen(false)}>
+              <Link
+                to='/shoppingcart'
+                className='nav-link'
+                onClick={() => setIsOpen(false)}>
                 Mon Panier <span className='cartcount'>{props.cartCount}</span>
               </Link>
             </li>
@@ -55,12 +64,18 @@ const Navbar = (props) => {
       ) : (
         <>
           <li>
-            <Link to='/register' className='nav-link px-4' onClick={() => setIsOpen(false)}>
+            <Link
+              to='/register'
+              className='nav-link px-4'
+              onClick={() => setIsOpen(false)}>
               S'enregistrer
             </Link>
           </li>
           <li>
-            <Link to='/signin' className='nav-link' onClick={() => setIsOpen(false)}>
+            <Link
+              to='/signin'
+              className='nav-link'
+              onClick={() => setIsOpen(false)}>
               Se connecter
             </Link>
           </li>

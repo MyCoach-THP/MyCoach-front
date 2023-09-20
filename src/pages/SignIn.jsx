@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
-import { cartAtom } from "./cartAtom";
+import { authAtom } from "../atoms/authAtom";
+import { cartAtom } from "../atoms/cartAtom";
 import { API_BASE_URL } from "../../config";
 import { Link } from "react-router-dom";
 
@@ -14,10 +14,10 @@ const SignIn = () => {
   const [cart, setCart] = useAtom(cartAtom);
   let authToken;
 
-  useEffect(()=>{
+  useEffect(() => {
     setEmail("user@test.fr");
     setPassword("aaaaaa");
-  },[])
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ const SignIn = () => {
             is_coach: data.user.is_coach,
           });
           setCart({
-            cartlist: data.user.cartlist
+            cartlist: data.user.cartlist,
           });
 
           localStorage.setItem("isLoggedIn", "true");

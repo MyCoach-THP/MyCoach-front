@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "../../config";
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
+import { authAtom } from "../atoms/authAtom";
 
 const UserRegularInfo = ({ profileData }) => {
   const [authState] = useAtom(authAtom);
@@ -11,7 +11,6 @@ const UserRegularInfo = ({ profileData }) => {
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
 
   const fetchPurchaseHistory = async () => {
     try {
@@ -24,20 +23,19 @@ const UserRegularInfo = ({ profileData }) => {
       const response = await fetch(`${API_BASE_URL}/purchase_histories`, {
         headers: token
           ? {
-            Authorization: `Bearer ${token}`,
-          }
+              Authorization: `Bearer ${token}`,
+            }
           : {},
       });
 
-    if (response.ok) {
-      const data = await response.json();
-      if (Array.isArray(data)) {
-        setPurchaseHistory(data);
-      } else {
-        setPurchaseHistory([]); // Set to empty array if data is not an array
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setPurchaseHistory(data);
+        } else {
+          setPurchaseHistory([]); // Set to empty array if data is not an array
+        }
       }
-    }
-
     } catch (error) {
       console.error(`An error occurred while fetching data: ${error}`);
       setError(error);
@@ -51,7 +49,7 @@ const UserRegularInfo = ({ profileData }) => {
   }, []);
 
   const handleClickPlan = (plan) => {
-    console.log(plan)
+    console.log(plan);
     setSelectedPlan(plan);
     setShowPlan(true);
   };
@@ -72,9 +70,9 @@ const UserRegularInfo = ({ profileData }) => {
         alt='User Profile Picture'
         className='profile-picture'
       />
-      <div className='mb-4'>
+      {/* <div className='mb-4'>
         <strong>Nom :</strong> {profileData.lastname}
-      </div>
+      </div> */}
       <div className='mb-4'>
         <strong>Prénom :</strong> {profileData.firstname}
       </div>

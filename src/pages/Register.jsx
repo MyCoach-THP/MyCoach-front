@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
+import { authAtom } from "../atoms/authAtom";
 import { API_BASE_URL } from "../../config";
 
 

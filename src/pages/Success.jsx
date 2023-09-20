@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { selectedPlanAtom, purchasedItemsAtom, cartAtom } from "./cartAtom";
-import { authAtom } from "./authAtom";
+import {
+  selectedPlanAtom,
+  purchasedItemsAtom,
+  cartAtom,
+} from "../atoms/cartAtom";
+import { authAtom } from "../atoms/authAtom";
 import { API_BASE_URL } from "../../config";
 
 function Success() {

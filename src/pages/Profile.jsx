@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
-import { cartAtom } from "./cartAtom";
-import ProfileUpdateForm from "./ProfileUpdateForm";
+import { authAtom } from "../atoms/authAtom";
+import { cartAtom } from "../atoms/cartAtom";
+import ProfileUpdateForm from "../components/ProfileUpdateForm";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import UserRegularInfo from "./UserRegularInfo";
-import UserCoachInfo from "./UserCoachInfo";
+import UserRegularInfo from "../components/UserRegularInfo";
+import UserCoachInfo from "../components/UserCoachInfo";
 import axios from "axios";
-
-
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -38,11 +36,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    let userId = null
+    let userId = null;
     if (id === undefined) {
-      userId = user_id
+      userId = user_id;
     } else {
-      userId = id
+      userId = id;
     }
     setDisplayedUserId(userId);
     fetch(`${API_BASE_URL}/coaches/${userId}`)
@@ -62,11 +60,11 @@ const Profile = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    let coachId = null
+    let coachId = null;
     if (id === undefined) {
-      coachId = user_id
+      coachId = user_id;
     } else {
-      coachId = id
+      coachId = id;
     }
 
     fetch(`${API_BASE_URL}/training_plans_by_coach/${coachId}`, {
@@ -85,7 +83,6 @@ const Profile = () => {
       });
   }, [id]);
 
-
   if (!profileData) {
     return <div>Chargement...</div>;
   }
@@ -97,7 +94,7 @@ const Profile = () => {
     setTimeout(() => {
       setFlashMessage(null);
       window.location.reload();
-    }, 4000);
+    }, 100);
   };
 
   const handleCloseForm = (plan) => {
@@ -129,8 +126,6 @@ const Profile = () => {
       navigate("/signin");
     }
   };
-
-
 
   return (
     <div className='background-style2'>

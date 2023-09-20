@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { API_BASE_URL } from "../../config";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
-import { cartAtom } from "./cartAtom";
+import { authAtom } from "../atoms/authAtom";
+import { cartAtom } from "../atoms/cartAtom";
 import { useNavigate } from "react-router-dom";
 
 const UserCoachInfo = ({ profileData, trainingPlans }) => {
-
   const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [authState] = useAtom(authAtom);
@@ -14,7 +13,6 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
   const [cart, setCart] = useAtom(cartAtom);
   const navigate = useNavigate();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
 
   const handleClickPlan = (plan) => {
     setSelectedPlan(plan);
@@ -26,7 +24,6 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
   };
 
   const handleAddToCartClick = (event) => {
-
     event.disabled = true;
     event.textContent = "Le programme est déjà dans votre panier";
     event.className = "button-add-cart-disabled";
@@ -56,10 +53,7 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
     }
   };
 
-  useEffect(()=>{
-
-  }
-  ,[cart])
+  useEffect(() => {}, [cart]);
 
   const centerPopupStyle = {
     transform: "translate(-50%, -50%)",
@@ -147,7 +141,6 @@ const UserCoachInfo = ({ profileData, trainingPlans }) => {
       )}
     </>
   );
-
 };
 
 export default UserCoachInfo;

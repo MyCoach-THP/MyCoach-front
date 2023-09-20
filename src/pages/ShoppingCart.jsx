@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useAtom } from "jotai";
-import { authAtom } from "./authAtom";
-import { cartAtom, selectedPlanAtom, purchasedItemsAtom } from "./cartAtom";
+import { authAtom } from "../atoms/authAtom";
+import {
+  cartAtom,
+  selectedPlanAtom,
+  purchasedItemsAtom,
+} from "../atoms/cartAtom";
 import { API_BASE_URL } from "../../config";
 import { useStripe } from "@stripe/react-stripe-js";
 import { Link } from "react-router-dom";
@@ -20,38 +24,35 @@ const ShoppingCart = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   const user_id = authState.user_id;
 
   useEffect(() => {
     getCart();
   }, []);
 
-const getCart = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    const response = await fetch(`${API_BASE_URL}/cart/get`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const getCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_BASE_URL}/cart/get`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch cart");
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart");
+      }
+
+      const data = await response.json();
+      console.log(data.cartlist);
+      setCart({ cartlist: data.cartlist });
+      setCartCount(data.cartlist.length);
+    } catch (error) {
+      console.error("There was an error fetching cart data!", error);
     }
-
-    const data = await response.json();
-    console.log(data.cartlist);
-    setCart({ cartlist: data.cartlist });
-    setCartCount(data.cartlist.length);
-  } catch (error) {
-    console.error("There was an error fetching cart data!", error);
-  }
-};
-
-
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -139,11 +140,11 @@ const getCart = async () => {
       console.error("An error occurred during checkout: ", error);
     }
   };
-  
-const handleSetJotaiState = () => {
-  setCart({ cartlist: myCart.map((item) => item.id) });
-};
-  
+
+  const handleSetJotaiState = () => {
+    setCart({ cartlist: myCart.map((item) => item.id) });
+  };
+
   const handleCheckoutAndOpenModal = async () => {
     // Mettre à jour l'état de Jotai
     handleSetJotaiState();
@@ -151,7 +152,6 @@ const handleSetJotaiState = () => {
     // Ouvrir la modal
     setIsModalOpen(true);
   };
-
 
   return (
     <>
