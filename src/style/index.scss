@@ -2,6 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "./trainingplan.scss";
+@import "./hero.scss";
+@import "./description.scss";
 
 @font-face {
   font-family: "Bahnschrift";
@@ -177,53 +179,6 @@ $custom-blue-hover: #19b9e0;
   text-align: center;
 }
 
-.description-container {
-  width: 100%;
-  color: black;
-  text-align: center;
-  font-size: 20px;
-  font-family: 'Bahnschrift', sans-serif;
-}
-
-.description-title {
-  font-size: 6vh;
-}
-
-.description-text {
-  margin: 1em 2%;
-}
-
-.description-highlight {
-  margin-bottom: 1em;
-}
-
-.description-blue {
-  color: #00ccff;
-}
-
-.description-image {
-  width: 15vw;
-  max-width: 500px;
-  min-width: 200px;
-  height: auto;
-  margin: auto;
-  display: block;
-  filter: drop-shadow(0 -1mm 3mm rgb(0, 110, 255));
-  user-select: none;
-  animation: rotateit 1s linear infinite;
-}
-
-.disabled {
-  background-color: grey !important;
-}
-
-.description-text-small {
-  margin: 0.5em 2%;
-}
-
-.description-call-to-action {
-  margin: 1em 2% 2em 2%;
-}
 
 .popup-plan {
   position: fixed;

@@ -1,0 +1,9 @@
+.image-transition-enter, .image-transition-leave-active {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.image-transition-enter-active, .image-transition-leave {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}

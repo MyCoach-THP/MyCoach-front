@@ -5,6 +5,8 @@ import AliceCarousel from 'react-alice-carousel';
 import "react-alice-carousel/lib/alice-carousel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+
 
 const CoachesCarousel = () => {
   const [coaches, setCoaches] = useState([]);
@@ -77,15 +79,27 @@ const CoachesCarousel = () => {
   );
 
   return (
-    <div className='flex justify-around p-4'>
-      <AliceCarousel
-        mouseTracking
-        items={items}
-        responsive={responsive}
-        ref={carouselRef}
-        renderPrevButton={renderPrevButton}
-        renderNextButton={renderNextButton} />
+    <div className='flex flex-col items-center p-4'>
+      <div className='flex justify-around'>
+        <AliceCarousel
+          mouseTracking
+          items={items}
+          responsive={responsive}
+          ref={carouselRef}
+          renderPrevButton={renderPrevButton}
+          renderNextButton={renderNextButton}
+        />
+      </div>
+      <Link
+        to='/alltrainingplans'
+        className='mt-4 inline-block bg-blue-500 text-white py-2 px-8 md:py-2 md:px-16 rounded'
+        style={{
+          boxShadow:
+            "0 4px 6px rgba(255,255,255,0.3), 0 1px 3px rgba(255,255,255,0.2)",
+        }}>
+        Voir tous les plans d'entrainement proposés par nos coachs
+      </Link>
     </div>
-  )
+  );
 }
 export default CoachesCarousel
