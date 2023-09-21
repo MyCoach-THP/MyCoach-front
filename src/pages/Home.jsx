@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Card from "@/components/Card";
 import { API_BASE_URL } from "../../config";
 import CoachesCarousel from "../components/CoachesCarousel";
 import Description from "../components/Description";
@@ -16,7 +15,6 @@ const Home = () => {
     "https://s1.1zoom.me/big0/69/Fitness_Workout_Brunette_girl_Hands_Dumbbells_Gym_587131_1280x853.jpg",
   ];
 
-  const [coaches, setCoaches] = useState([]);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const [showNextImage, setShowNextImage] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(
@@ -25,7 +23,6 @@ const Home = () => {
   const [nextImageIndex, setNextImageIndex] = useState(
     (currentImageIndex + 1) % images.length
   );
-  const [user, setUser] = useState(null);
   const [authState] = useAtom(authAtom);
   const user_id = authState.user_id;
   const token = localStorage.getItem("token");
@@ -34,28 +31,27 @@ const Home = () => {
   const [displayedUserId, setDisplayedUserId] = useState(null);
   const [isCoach, setIsCoach] = useState(false);
 
-  useEffect(() => {
-    let userId = null;
-    if (id === undefined) {
-      userId = user_id;
-    } else {
-      userId = id;
-    }
-    setDisplayedUserId(userId);
+useEffect(() => {
+  let userId = id || user_id;
+  setDisplayedUserId(userId);
+
+  if (userId) {
     fetch(`${API_BASE_URL}/coaches/${userId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.is_coach) {
-          setIsCoach(false);
-        } else {
-          setIsCoach(true);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
+        return response.json();
+      })
+      .then((data) => {
+        setIsCoach(!!data.is_coach);
         setProfileData(data);
       })
       .catch((error) => {
         console.error("There was an error fetching the profile data!", error);
       });
-  }, [user_id, id]);
+  }
+}, [user_id, id]);
 
 
   useEffect(() => {

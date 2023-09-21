@@ -8,7 +8,6 @@ import {
 } from "../atoms/cartAtom";
 import { API_BASE_URL } from "../../config";
 import { useStripe } from "@stripe/react-stripe-js";
-import { Link } from "react-router-dom";
 
 const generateUniqueID = (myCart) => {
   return Date.now() + "-" + Math.random().toString(36).substr(2, 9);
@@ -168,7 +167,6 @@ const ShoppingCart = () => {
                 {myCart.map((item) => (
                   <div key={item.id}>
                     {" "}
-                    {/* Make sure you have unique key here */}
                     <p className='m-2'>
                       {item.name} {item.price}€
                       <button
@@ -204,14 +202,6 @@ const ShoppingCart = () => {
                     </div>
                   </div>
                 )}
-
-                {/* <button onClick={handleSetJotaiState}>
-                  Set Cart to Jotai State
-                </button>
-
-                <Link to='/success'>
-                  <button>Go to Success Page</button>
-                </Link> */}
               </>
             ) : (
               "Votre panier est vide"

@@ -18,7 +18,6 @@ const ProfileUpdateForm = ({ onUpdate, existingData, userId, onCloseForm }) => {
       return;
     }
 
-    // Validation des champs
     if (!firstname || !description) {
       setError("Les champs ne peuvent pas être vides");
       return;

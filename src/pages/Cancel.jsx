@@ -1,5 +1,3 @@
-// Cancel.js
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +13,6 @@ function Cancel() {
     <div className='background-style'>
       <div className='coachform'>
         <h1 className='text-2xl mb-4 text-center'>Le paiement a été annulé</h1>
-        {/* Your additional logic here */}
         <div className='flex justify-center my-4 '>
           <button
             onClick={goToCart}

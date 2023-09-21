@@ -32,14 +32,12 @@ function Success() {
       const text = await response.text();
 
       if (!text.startsWith("{")) {
-        // Add this check
         console.error(`Invalid JSON received: ${text}`);
         return;
       }
 
       const data = JSON.parse(text);
 
-      // ... rest of the code
     } catch (error) {
       console.error("Failed to check payment status:", error);
     }
@@ -52,7 +50,6 @@ function Success() {
     }
     try {
       for (const item of cartList) {
-        // Debug: Log data being sent
         console.log("Data being sent:", {
           user_id: authState.user_id,
           training_plan_id: item,
@@ -74,7 +71,6 @@ function Success() {
           console.log("Successfully updated a purchase history.");
         } else {
           console.log("Failed to update a purchase history.");
-          // Debug: Log the error response
           const errorData = await response.json();
           console.log("Error data received:", errorData);
         }
@@ -86,12 +82,11 @@ function Success() {
 
   useEffect(() => {
     checkPaymentStatus();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (cart && cart.cartlist && cart.cartlist.length > 0) {
       setPurchasedItems([...cart.cartlist]);
-      // Envoyer les données au backend ici
       sendPurchaseToBackend(cart.cartlist);
       setCart({ cartlist: [] });
     }

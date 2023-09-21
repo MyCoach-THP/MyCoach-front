@@ -1,6 +1,5 @@
 import { atom, useAtom } from "jotai";
 
-// In your cartAtom.js
 export const cartAtom = atom({
   cartlist: [],
   removeFromCart: (id) => (get, set) => {

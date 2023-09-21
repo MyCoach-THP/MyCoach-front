@@ -6,7 +6,6 @@ import ProfileUpdateForm from "../components/ProfileUpdateForm";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import UserRegularInfo from "../components/UserRegularInfo";
 import UserCoachInfo from "../components/UserCoachInfo";
 import axios from "axios";
@@ -22,13 +21,11 @@ const Profile = () => {
   const { id } = useParams();
   const [displayedUserId, setDisplayedUserId] = useState(null);
   const [isCoach, setIsCoach] = useState(false);
-  const [showPlan, setShowPlan] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(false);
   const [cart, setCart] = useAtom(cartAtom);
-  const [cartCount, setCartCount] = useState(0);
   const fetchPurchaseHistory = async () => {
     try {
-      const response = await axios.get("/purchase_histories"); // Assurez-vous que cette URL correspond à l'endpoint Rails
+      const response = await axios.get("/purchase_histories");
       return response.data;
     } catch (error) {
       console.error("An error occurred while fetching data: ", error);
@@ -36,36 +33,30 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    let userId = null;
-    if (id === undefined) {
-      userId = user_id;
-    } else {
-      userId = id;
-    }
+    let userId = id || user_id;
     setDisplayedUserId(userId);
-    fetch(`${API_BASE_URL}/coaches/${userId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (!data.is_coach) {
-          setIsCoach(false);
-        } else {
-          setIsCoach(true);
-        }
-        setProfileData(data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the profile data!", error);
-      });
+
+    if (userId) {
+      fetch(`${API_BASE_URL}/coaches/${userId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setIsCoach(!!data.is_coach);
+          setProfileData(data);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the profile data!", error);
+        });
+    }
   }, [user_id, id]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    let coachId = null;
-    if (id === undefined) {
-      coachId = user_id;
-    } else {
-      coachId = id;
-    }
+    const coachId = id || user_id;
 
     fetch(`${API_BASE_URL}/training_plans_by_coach/${coachId}`, {
       method: "GET",

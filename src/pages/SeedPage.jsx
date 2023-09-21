@@ -5,7 +5,6 @@ function SeedPage() {
   const seedDatabase = () => {
     fetch(`${API_BASE_URL}/api/seed_database`, {
       method: "POST",
-      // Additional headers and security measures
     })
       .then((response) => response.json())
       .then((data) => {

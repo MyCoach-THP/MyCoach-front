@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { API_BASE_URL } from "../../config";
 
 const TrainingPlanView = ({ current }) => {
   const [currentPlan, setCurrentPlan] = useState(null);

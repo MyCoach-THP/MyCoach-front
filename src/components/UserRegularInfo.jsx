@@ -16,10 +16,8 @@ const UserRegularInfo = ({ profileData }) => {
     try {
       setLoading(true);
 
-      // Get token from authState
-      const token = authState.token; // or whatever key you use in the authAtom to store the token
+      const token = authState.token; 
 
-      // If the token exists, use it for the request
       const response = await fetch(`${API_BASE_URL}/purchase_histories`, {
         headers: token
           ? {
@@ -33,7 +31,7 @@ const UserRegularInfo = ({ profileData }) => {
         if (Array.isArray(data)) {
           setPurchaseHistory(data);
         } else {
-          setPurchaseHistory([]); // Set to empty array if data is not an array
+          setPurchaseHistory([]); 
         }
       }
     } catch (error) {

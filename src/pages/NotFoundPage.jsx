@@ -1,14 +1,11 @@
-// NotFoundPage.jsx
-
 import React from "react";
 import { useNavigate } from "react-router-dom"; 
 
 const NotFoundPage = () => {
-  const navigate = useNavigate(); // initialize useNavigate
+  const navigate = useNavigate();
 
   const goToHome = () => {
-    // define goToHome function
-    navigate("/"); // navigate to home page
+    navigate("/");
   };
   return (
     <div className='background-style'>

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logoSvg from "../assets/logo.svg";
 import { useAtom } from "jotai";
 import { authAtom } from "../atoms/authAtom";
-import { API_BASE_URL } from "../../config";
 
 const Navbar = (props) => {
   const navigate = useNavigate();
@@ -96,10 +95,8 @@ const Navbar = (props) => {
           <div className='w-8 h-1 bg-white'></div>
         </button>
 
-        {/* Links for Desktop */}
         <ul className='hidden lg:flex space-x-4'>{renderLinks()}</ul>
 
-        {/* Links for Mobile (Hamburger Menu) */}
         <ul
           className={`transition-all ease-out duration-300 ${
             isOpen
