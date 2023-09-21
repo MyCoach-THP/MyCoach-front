@@ -25,6 +25,7 @@ import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import NotFoundPage from "./pages/NotFoundPage";
 import SeedPage from "./pages/SeedPage";
+import ScrollToTop from "./components/ScrollToTop";
 import { API_BASE_URL } from "../config";
 
 const stripePromise = loadStripe(
@@ -75,6 +76,7 @@ function App() {
   return (
     <div className='main-content flex flex-col min-h-screen'>
       <Router>
+        <ScrollToTop />
         <Navbar cartCount={cartCount} />
         <Routes>
           <Route path='/' element={<Home />} />

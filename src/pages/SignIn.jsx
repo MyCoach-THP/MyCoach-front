@@ -85,6 +85,7 @@ const SignIn = () => {
                 type='email'
                 placeholder='Email'
                 value={email}
+                autoComplete='email'
                 onChange={(e) => setEmail(e.target.value)}
                 className='border p-2 rounded w-full'
               />
@@ -94,6 +95,7 @@ const SignIn = () => {
                 type='password'
                 placeholder='Password'
                 value={password}
+                autoComplete='current-password'
                 onChange={(e) => setPassword(e.target.value)}
                 className='border p-2 rounded w-full'
               />

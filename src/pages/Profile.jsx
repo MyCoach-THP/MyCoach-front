@@ -75,7 +75,7 @@ const Profile = () => {
   }, [id]);
 
   if (!profileData) {
-    return <div>Chargement...</div>;
+    return <div className='background-style2'>Chargement...</div>;
   }
 
   const handleUpdate = (updatedData) => {

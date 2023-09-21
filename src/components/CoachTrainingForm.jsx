@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../../config";
 
-
 const CoachTrainingForm = ({ onNewPlan }) => {
   const [token, setToken] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     price: 0,
-    exercices: ""
+    exercices: "",
   });
 
   useEffect(() => {
@@ -21,6 +20,9 @@ const CoachTrainingForm = ({ onNewPlan }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === "price" && value.length > 5) {
+      return; 
+    }
     setFormData({ ...formData, [name]: value });
   };
 
@@ -28,11 +30,17 @@ const CoachTrainingForm = ({ onNewPlan }) => {
     e.preventDefault();
 
     if (formData.name.length < 5) {
-      setErrorMessage("Le nom de votre programme doit avoir au moins 5 caractères.");
+      setErrorMessage(
+        "Le nom de votre programme doit avoir au moins 5 caractères."
+      );
     } else if (formData.description.length < 10) {
-      setErrorMessage("La description de votre programme doit avoir au moins 10 caractères.");
+      setErrorMessage(
+        "La description de votre programme doit avoir au moins 10 caractères."
+      );
     } else if (formData.exercices.length < 10) {
-      setErrorMessage("La routine d'entrainement de votre programme doit avoir au moins 10 caractères.");
+      setErrorMessage(
+        "La routine d'entrainement de votre programme doit avoir au moins 10 caractères."
+      );
     } else if (formData.price === 0) {
       setErrorMessage("Vous devez spécifier un prix minimum.");
     } else {
@@ -66,13 +74,12 @@ const CoachTrainingForm = ({ onNewPlan }) => {
 
   return (
     <form onSubmit={handleSubmit} className='space-y-4'>
-
       {errorMessage.length > 0 && (
-        <div role="Erreur">
-          <div class="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+        <div role='Erreur'>
+          <div class='bg-red-500 text-white font-bold rounded-t px-4 py-2'>
             Danger
           </div>
-          <div class="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+          <div class='border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700'>
             <p>{errorMessage}</p>
           </div>
         </div>
@@ -103,7 +110,8 @@ const CoachTrainingForm = ({ onNewPlan }) => {
           onChange={handleChange}
           className='formwidget'
           placeholder='Insérez la description ici'
-          rows='4' style={{ resize: "none" }}></textarea>
+          rows='4'
+          style={{ resize: "none" }}></textarea>
       </div>
 
       <div className='flex flex-col'>
@@ -117,7 +125,8 @@ const CoachTrainingForm = ({ onNewPlan }) => {
           onChange={handleChange}
           className='formwidget'
           placeholder="Insérez la routine d'entrainement ici"
-          rows='4' style={{ resize: "none" }}></textarea>
+          rows='4'
+          style={{ resize: "none" }}></textarea>
       </div>
 
       <div className='flex flex-col'>

@@ -23,7 +23,7 @@ return (
           <ContactForm />
         </div>
       </div>
-      <p className='text-xs sm:text-sm mb-4 w-full text-center sm:text-left'>
+      <p className='text-xs sm:text-sm mb-4 w-full text-center md:text-center'>
         © 2023, Tous droits réservés.
       </p>
     </div>

@@ -4,28 +4,27 @@ import { useAtom } from "jotai";
 import { authAtom } from "../atoms/authAtom";
 import { API_BASE_URL } from "../../config";
 
-
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [authState, setAuthState] = useAtom(authAtom);
   const [isCoach, setIsCoach] = useState(false);
-  const [description, setDescription] = useState('');
-  const [firstname, setFirstname] = useState('');
+  const [description, setDescription] = useState("");
+  const [firstname, setFirstname] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   let authToken;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('user[email]', email);
-    formData.append('user[password]', password);
-    formData.append('user[is_coach]', isCoach);
-    formData.append('user[description]', description);
-    formData.append('user[firstname]', firstname);
+    formData.append("user[email]", email);
+    formData.append("user[password]", password);
+    formData.append("user[is_coach]", isCoach);
+    formData.append("user[description]", description);
+    formData.append("user[firstname]", firstname);
     if (selectedImage) {
-      formData.append('user[image]', selectedImage);
+      formData.append("user[image]", selectedImage);
     }
 
     fetch(`${API_BASE_URL}/users`, {
@@ -33,7 +32,7 @@ const Register = () => {
       body: formData,
     })
       .then((response) => {
-        console.log(response)
+        console.log(response);
         if (response.ok) {
           const authHeader = response.headers.get("Authorization");
           authToken = authHeader.split(" ")[1];
@@ -75,6 +74,7 @@ const Register = () => {
                 placeholder='Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete='email'
                 className='border p-2 rounded w-full'
               />
             </div>
@@ -83,6 +83,7 @@ const Register = () => {
                 type='password'
                 placeholder='Mot de passe'
                 value={password}
+                autoComplete='current-password'
                 onChange={(e) => setPassword(e.target.value)}
                 className='border p-2 rounded w-full'
               />
@@ -94,6 +95,7 @@ const Register = () => {
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
                 className='border p-2 rounded w-full'
+                autoComplete='given-name'
               />
             </div>
             <div className='mb-4'>
