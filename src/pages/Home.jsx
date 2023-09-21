@@ -95,7 +95,8 @@ const Home = () => {
             }`}
             style={{
               backgroundImage: `url("${image}")`,
-              backgroundSize: windowWidth <= 768 ? "auto 100%" : "cover", // ajustez le seuil selon vos besoins
+              backgroundSize: windowWidth <= 768 ? "auto 100%" : "cover",
+              backgroundPosition: "center",
             }}></div>
         ))}
         <div
