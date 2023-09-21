@@ -77,7 +77,7 @@ const CoachesCarousel = () => {
   );
 
 return (
-  <div className='flex flex-col items-center p-4 w-full lg:w-3/4 xl:w-2/3 mx-auto'>
+  <div className='flex flex-col items-center p-4 w-full lg:w-full xl:w-full mx-auto'>
     <div className='flex justify-around w-full'>
       <AliceCarousel
         mouseTracking
