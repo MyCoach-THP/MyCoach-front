@@ -78,11 +78,13 @@ const Home = () => {
   }, [currentImageIndex, nextImageIndex]);
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col' role='main'>
       <div
         className={`bg-cover bg-center ${
           isLoggedIn ? "h-[55vh]" : "h-[80vh]"
-        } flex items-center justify-center shadow-xl mb-5 relative`}>
+        } flex items-center justify-center shadow-xl mb-5 relative`}
+        role='img'
+        aria-label='Background images of fitness models'>
         {images.map((image, index) => (
           <div
             key={index}
@@ -101,34 +103,41 @@ const Home = () => {
         ))}
         <div
           className='text-center text-white bg-black bg-opacity-50 p-4 rounded w-full h-auto'
-          style={{ zIndex: 10 }}>
+          style={{ zIndex: 10 }}
+          role='contentinfo'>
           {!isLoggedIn ? (
             <>
-              <div className='text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold my-coach-div'>
-                <span className='blue'>My</span>
-                <span className='white'>Coach</span>
-              </div>
+              <header>
+                <div className='text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold my-coach-div'>
+                  <span className='blue'>My</span>
+                  <span className='white'>Coach</span>
+                </div>
+              </header>
               <p className='mt-2 text-sm md:text-md lg:text-lg xl:text-lg'>
                 Découvrez tous nos services
               </p>
               <Link
                 to='/register'
-                className='mt-4 inline-block bg-blue-500 text-white py-2 px-8 md:py-2 md:px-16 rounded'>
+                className='mt-4 inline-block bg-blue-500 text-white py-2 px-8 md:py-2 md:px-16 rounded'
+                role='button'>
                 S'inscrire
               </Link>
             </>
           ) : (
             <>
-              <div className='text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold my-coach-div'>
-                <span className='blue'>My</span>
-                <span className='white'>Coach</span>
-              </div>
+              <header>
+                <div className='text-4xl md:text-4xl lg:text-4xl xl:text-4xl font-bold my-coach-div'>
+                  <span className='blue'>My</span>
+                  <span className='white'>Coach</span>
+                </div>
+              </header>
               <p className='mt-2 text-sm md:text-md lg:text-lg xl:text-lg'>
                 {profileData
                   ? `Bienvenue ${profileData.firstname || profileData.email}`
                   : "Cliquez ici"}
               </p>
               <button
+                role='button'
                 onClick={() => {
                   const element = document.getElementById("coaches-carousel");
                   element.scrollIntoView({ behavior: "smooth" });
@@ -140,15 +149,15 @@ const Home = () => {
           )}
         </div>
       </div>
-      <div>
+      <div role='complementary'>
         <Description />
       </div>
-      <div id='coaches-carousel' className='card-section-background'>
+      <header id='coaches-carousel' className='card-section-background'>
         <h1 className='text-2xl mb-4 text-center text-white font-bold mt-4'>
           Nos Coachs
         </h1>
         <CoachesCarousel />
-      </div>
+      </header>
     </div>
   );
 };
