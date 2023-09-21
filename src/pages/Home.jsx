@@ -30,29 +30,37 @@ const Home = () => {
   const { id } = useParams();
   const [displayedUserId, setDisplayedUserId] = useState(null);
   const [isCoach, setIsCoach] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-useEffect(() => {
-  let userId = id || user_id;
-  setDisplayedUserId(userId);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-  if (userId) {
-    fetch(`${API_BASE_URL}/coaches/${userId}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setIsCoach(!!data.is_coach);
-        setProfileData(data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the profile data!", error);
-      });
-  }
-}, [user_id, id]);
+  useEffect(() => {
+    let userId = id || user_id;
+    setDisplayedUserId(userId);
 
+    if (userId) {
+      fetch(`${API_BASE_URL}/coaches/${userId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setIsCoach(!!data.is_coach);
+          setProfileData(data);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the profile data!", error);
+        });
+    }
+  }, [user_id, id]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -87,6 +95,7 @@ useEffect(() => {
             }`}
             style={{
               backgroundImage: `url("${image}")`,
+              backgroundSize: windowWidth <= 768 ? "auto 100%" : "cover", // ajustez le seuil selon vos besoins
             }}></div>
         ))}
         <div
